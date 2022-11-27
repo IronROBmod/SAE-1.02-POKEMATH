@@ -1,5 +1,6 @@
  class Pokemon{
     String name;
+    int niveau;
     int pv;
     int attack;
     int attackSpe;
