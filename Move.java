@@ -5,6 +5,5 @@ public class Move{
     boolean physique;
     boolean speciale;
     boolean statut;
-    boolean staab = false;
     String description;
 }

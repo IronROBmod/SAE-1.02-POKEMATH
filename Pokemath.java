@@ -33,11 +33,12 @@ class Pokemath extends Program{
     }
     //si le type de l'attaque est le même que le type du pokemon, le bonus est de 1.5
 
-    Move isStaab(Move move, Pokemon pokemon){
+    double isStaab(Move move, Pokemon pokemon){
+        double staab = 1;
         if(move.type == pokemon.type1 || move.type == pokemon.type2){
-            move.power =move.power+(move.power/2);
+            stabb = 1,5 ;
         }
-        return move;
+        return staab;
     }
     //si le type de l'attaque est le même que le type du pokemon adverse, le malus est de 0.5
 
