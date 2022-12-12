@@ -115,8 +115,6 @@ class Pokemath extends Program{
     void combat(Pokemon[] pokeJ1, Pokemon[] pokeJ2) {
         while(toutLesPokeSontKO(pokeJ1) || toutLesPokeSontKO(pokeJ2)) {
             attaquer(pokeJ1, pokeJ2);
-            attaquer(pokeJ1, pokeJ2);
-
         }
     }
 

@@ -1,4 +1,4 @@
-public class Move{
+class Move{
     String name;
     Type type;
     int power;
