@@ -72,19 +72,6 @@ class Pokemath extends Program{
         return pokemon;
     }
 
-    //gerer touches du clavier
-
-    boolean isKeyPressed(String key){
-        return keyDown(key);
-    }
-
-    //arrwo up = haut
-
-    boolean isUpPressed(){
-        return isKeyPressed("up");
-    }
-
-
 
     String toString(Pokemon poke){
         String str = "";
