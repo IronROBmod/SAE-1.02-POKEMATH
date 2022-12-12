@@ -94,7 +94,37 @@ class Pokemath extends Program{
         }
         return str;
     }
+
+    // Fonction qui renvoie true gg
+    boolean toutLesPokeSontKO(Pokemon[] tab) {
+        for(int idx = 0; idx < length(tab); idx++) {
+            if (tab[idx].pv > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void attaquer(Pokemon poke1, Pokemon poke2) {
+        poke2.pv = poke2.pv - poke1.attaque;
+        println(poke1.name + "a utilisé [nom_attaque] sur " + poke2.name);
+        poke1.pv = poke1.pv - poke2.attaque;
+        println(poke2.name + "a utilisé [nom_attaque] sur " + poke1.name);
+    }
+
+    void combat(Pokemon[] pokeJ1, Pokemon[] pokeJ2) {
+        while(toutLesPokeSontKO(pokeJ1) || toutLesPokeSontKO(pokeJ2)) {
+            attaquer(pokeJ1[], pokeJ2);
+        }
+    }
+
     void algorithm(){
+        boolean quitter = false;
+        while(quitter) {
+            println('1. Combat');
+            println('2. ');
+            println('3. ');
+        }
         println("Veuillez choisir une langue de préférence :" + "\n" + "1 : FR" + "\n" + "2 : EN");
         int choix = readInt();
         String test = "";
