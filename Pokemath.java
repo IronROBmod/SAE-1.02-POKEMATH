@@ -114,26 +114,21 @@ class Pokemath extends Program{
 
     void combat(Pokemon[] pokeJ1, Pokemon[] pokeJ2) {
         while(toutLesPokeSontKO(pokeJ1) || toutLesPokeSontKO(pokeJ2)) {
-<<<<<<< HEAD
-            attaquer(pokeJ1[], pokeJ2);
-=======
             attaquer(pokeJ1, pokeJ2);
->>>>>>> 8ee3e43 (update attaque)
+            attaquer(pokeJ1, pokeJ2);
+
         }
     }
 
     void algorithm(){
         boolean quitter = false;
         while(quitter) {
-<<<<<<< HEAD
-            println('1. Combat');
-            println('2. ');
-            println('3. ');
-=======
             println("1. Combat");
             println("2. ");
             println("3. ");
->>>>>>> 8ee3e43 (update attaque)
+            println("1. Combat");
+            println("2. ");
+            println("3. ");
         }
         println("Veuillez choisir une langue de préférence :" + "\n" + "1 : FR" + "\n" + "2 : EN");
         int choix = readInt();
