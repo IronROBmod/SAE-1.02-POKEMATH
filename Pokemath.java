@@ -1,8 +1,8 @@
 class Pokemath extends Program{
    // int formuleDegats =  (((((((poke.niveau × 2 ÷ 5) + 2) × move.power × Att[Spé] ÷ 50) ÷ Def[Spé]) × Mod1) + 2) × CC × Mod2 × R ÷ 100) × STAB × Type1 × Type2 × Mod3;
-    Pokemon newPokemon(String name,int pv,int attack,int attackSpe,int defense,int defenseSpe,int vitesse,Type type1,Type type2,Move move1,Move move2,Move move3,Move move4,boolean player){
+    Pokemon newPokemon(String name, int niveau, int pv,int attack,int attackSpe,int defense,int defenseSpe,int vitesse,Type type1,Type type2,Move move1,Move move2,Move move3,Move move4,boolean player){
         Pokemon poke = new Pokemon();
-        poke.name = name;
+        poke.name = name;//t
         poke.niveau = niveau;
         poke.pv = pv;
         poke.attack = attack;
@@ -36,7 +36,7 @@ class Pokemath extends Program{
     double isStaab(Move move, Pokemon pokemon){
         double staab = 1;
         if(move.type == pokemon.type1 || move.type == pokemon.type2){
-            stabb = 1,5 ;
+            stabb = 1.5 ;
         }
         return staab;
     }
@@ -114,16 +114,26 @@ class Pokemath extends Program{
 
     void combat(Pokemon[] pokeJ1, Pokemon[] pokeJ2) {
         while(toutLesPokeSontKO(pokeJ1) || toutLesPokeSontKO(pokeJ2)) {
+<<<<<<< HEAD
             attaquer(pokeJ1[], pokeJ2);
+=======
+            attaquer(pokeJ1, pokeJ2);
+>>>>>>> 8ee3e43 (update attaque)
         }
     }
 
     void algorithm(){
         boolean quitter = false;
         while(quitter) {
+<<<<<<< HEAD
             println('1. Combat');
             println('2. ');
             println('3. ');
+=======
+            println("1. Combat");
+            println("2. ");
+            println("3. ");
+>>>>>>> 8ee3e43 (update attaque)
         }
         println("Veuillez choisir une langue de préférence :" + "\n" + "1 : FR" + "\n" + "2 : EN");
         int choix = readInt();
