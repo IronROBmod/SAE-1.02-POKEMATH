@@ -9,9 +9,5 @@ public class Pokemon{
     int vitesse;
     Type type1;
     Type type2;
-    Move move1;
-    Move move2;
-    Move move3;
-    Move move4;
-    boolean player = false;
+    Move[] attaques;
 }

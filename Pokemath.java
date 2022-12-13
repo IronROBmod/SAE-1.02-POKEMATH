@@ -1,6 +1,6 @@
 class Pokemath extends Program{
    // int formuleDegats =  (((((((poke.niveau × 2 ÷ 5) + 2) × move.power × Att[Spé] ÷ 50) ÷ Def[Spé]) × Mod1) + 2) × CC × Mod2 × R ÷ 100) × STAB × Type1 × Type2 × Mod3;
-    Pokemon newPokemon(String name, int niveau, int pv,int attack,int attackSpe,int defense,int defenseSpe,int vitesse,Type type1,Type type2,Move move1,Move move2,Move move3,Move move4,boolean player){
+    Pokemon newPokemon(String name, int niveau, int pv,int attack,int attackSpe,int defense,int defenseSpe,int vitesse,Type type1,Type type2,Move[] attaques){
         Pokemon poke = new Pokemon();
         poke.name = name;
         poke.niveau = niveau;
@@ -16,7 +16,7 @@ class Pokemath extends Program{
         poke.move2 = move2;
         poke.move3 = move3;
         poke.move4 = move4;
-        poke.player = player;
+        Move[] attaques = new Move[4];
         return poke;
     }
     Move newMove(String name,Type type,int power, boolean physique, boolean speciale, boolean statut, boolean staab,String description){
@@ -74,10 +74,24 @@ class Pokemath extends Program{
 
     String toString(Pokemon poke){
         String str = "";
-        str =poke.name = poke.name + "\n" + poke.niveau + "\n" + poke.pv + "\n" + poke.attack + "\n" + poke.attackSpe + "\n" + poke.defense + "\n" + poke.defenseSpe + "\n" + poke.vitesse + "\n" + poke.type1 ;
+        str =poke.name = poke.name + "\n" + 
+            poke.niveau + "\n" + 
+            poke.pv + "\n" + 
+            poke.attack + "\n" + 
+            poke.attackSpe + "\n" + 
+            poke.defense + "\n" + 
+            poke.defenseSpe + "\n" + 
+            poke.vitesse + "\n" + 
+            poke.type1 + "\n";
         if(poke.type2 != null){
             str = str + "\n" + poke.type2;
         }
+        str = str + "\n" + 
+            poke.attaque[0].name + " | " + 
+            poke.attaque[1].name + " | " + 
+            poke.attaque[2].name + " | " + 
+            poke.attaque[3].name;
+
         return str;
     }
 
