@@ -122,8 +122,6 @@ class Pokemath extends Program{
     }
     void algorithm(){
         clearScreen();
-        show();
-        cursor(5,5);
         println("Veuillez choisir une langue de préférence :" + "\n" + "1 : FR" + "\n" + "2 : EN");
         int choix = readInt();
         String test = "";
