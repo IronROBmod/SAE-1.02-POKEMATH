@@ -1,4 +1,4 @@
- class Pokemon{
+public class Pokemon{
     String name;
     int niveau;
     int pv;

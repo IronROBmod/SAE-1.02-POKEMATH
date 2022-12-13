@@ -2,7 +2,7 @@ class Pokemath extends Program{
    // int formuleDegats =  (((((((poke.niveau × 2 ÷ 5) + 2) × move.power × Att[Spé] ÷ 50) ÷ Def[Spé]) × Mod1) + 2) × CC × Mod2 × R ÷ 100) × STAB × Type1 × Type2 × Mod3;
     Pokemon newPokemon(String name, int niveau, int pv,int attack,int attackSpe,int defense,int defenseSpe,int vitesse,Type type1,Type type2,Move move1,Move move2,Move move3,Move move4,boolean player){
         Pokemon poke = new Pokemon();
-        poke.name = name;//t
+        poke.name = name;
         poke.niveau = niveau;
         poke.pv = pv;
         poke.attack = attack;
@@ -27,7 +27,6 @@ class Pokemath extends Program{
         move.physique = physique;
         move.speciale = speciale;
         move.statut = statut;
-        move.staab = staab;
         move.description = description;
         return move;
     }
@@ -92,30 +91,39 @@ class Pokemath extends Program{
         return true;
     }
 
-    void attaquer(Pokemon poke1, Pokemon poke2) {
-        poke2.pv = poke2.pv - poke1.attaque;
+    /*void attaquer(Pokemon poke1, Pokemon poke2) {
+        /*poke2.pv = poke2.pv - poke1.move;
         println(poke1.name + "a utilisé [nom_attaque] sur " + poke2.name);
-        poke1.pv = poke1.pv - poke2.attaque;
+        poke1.pv = poke1.pv - poke2.;
         println(poke2.name + "a utilisé [nom_attaque] sur " + poke1.name);
-    }
+    }*/
 
-    void combat(Pokemon[] pokeJ1, Pokemon[] pokeJ2) { //test
+    /*void combat(Pokemon[] pokeJ1, Pokemon[] pokeJ2) { //test
         while(toutLesPokeSontKO(pokeJ1) || toutLesPokeSontKO(pokeJ2)) {
             attaquer(pokeJ1, pokeJ2);
             attaquer(pokeJ1, pokeJ2);
+       
+    }*/
+    String[] initniveau(int nombre){
+        String[] tab = new String[nombre];
+        int nbniveau = 1;
+        for(int i = 0;i<nombre;i++){
+            tab[i] ="Niveau " + nbniveau;
+            nbniveau++;
         }
+        return tab;
     }
-
-    void algorithm(){
-        boolean quitter = false;
-        while(quitter) {
-            println("1. Combat");
-            println("2. ");
-            println("3. ");
-            println("1. Combat");
-            println("2. ");
-            println("3. ");
+    String toString(String[] tab){
+        String str = "";
+        for(int i = 0;i<length(tab);i++){
+            str = str + tab[i] + "     ";
         }
+        return str;
+    }
+    void algorithm(){
+        clearScreen();
+        show();
+        cursor(5,5);
         println("Veuillez choisir une langue de préférence :" + "\n" + "1 : FR" + "\n" + "2 : EN");
         int choix = readInt();
         String test = "";
@@ -124,26 +132,20 @@ class Pokemath extends Program{
         }else if(choix == 2){
             test = "Hello you I'm Armandino";
         }
-        
+        clearScreen();
         for(int i = 0;i<length(test);i++){
             print(charAt(test,i));
             delay(100);
-        }  
-        
-
-
-
-
-
-
-        
-
-
-
-
-
-
-
-
+        } 
+        println();
+        println(toString(initniveau(3)));
+        int choixniveau = readInt();
+        if(choixniveau == 1){
+            println("Vous avez choisi le niveau 1");
+        }else if(choixniveau == 2){
+            println("Vous avez choisi le niveau 2");
+        }else if(choixniveau == 3){
+            println("Vous avez choisi le niveau 3");
+        }
     }
 }
