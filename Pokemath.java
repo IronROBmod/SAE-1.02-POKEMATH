@@ -99,13 +99,10 @@ class Pokemath extends Program{
         println(poke2.name + "a utilisé [nom_attaque] sur " + poke1.name);
     }
 
-    void combat(Pokemon[] pokeJ1, Pokemon[] pokeJ2) {
+    void combat(Pokemon[] pokeJ1, Pokemon[] pokeJ2) { //test
         while(toutLesPokeSontKO(pokeJ1) || toutLesPokeSontKO(pokeJ2)) {
-<<<<<<< HEAD
-            attaquer(pokeJ1[], pokeJ2);
-=======
             attaquer(pokeJ1, pokeJ2);
->>>>>>> 8ee3e43 (update attaque)
+            attaquer(pokeJ1, pokeJ2);
         }
     }
 
