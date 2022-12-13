@@ -72,19 +72,6 @@ class Pokemath extends Program{
         return pokemon;
     }
 
-    //gerer touches du clavier
-
-    boolean isKeyPressed(String key){
-        return keyDown(key);
-    }
-
-    //arrwo up = haut
-
-    boolean isUpPressed(){
-        return isKeyPressed("up");
-    }
-
-
 
     String toString(Pokemon poke){
         String str = "";
@@ -114,9 +101,11 @@ class Pokemath extends Program{
 
     void combat(Pokemon[] pokeJ1, Pokemon[] pokeJ2) {
         while(toutLesPokeSontKO(pokeJ1) || toutLesPokeSontKO(pokeJ2)) {
+<<<<<<< HEAD
+            attaquer(pokeJ1[], pokeJ2);
+=======
             attaquer(pokeJ1, pokeJ2);
-            attaquer(pokeJ1, pokeJ2);
-
+>>>>>>> 8ee3e43 (update attaque)
         }
     }
 
