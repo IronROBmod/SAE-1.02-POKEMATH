@@ -36,7 +36,7 @@ class Pokemath extends Program{
     double isStaab(Move move, Pokemon pokemon){
         double staab = 1;
         if(move.type == pokemon.type1 || move.type == pokemon.type2){
-            stabb = 1.5 ;
+            staab = 1.5 ;
         }
         return staab;
     }
