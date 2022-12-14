@@ -16,6 +16,13 @@ class Pokemath extends Program{
         attaques = new Move[4];
         return poke;
     }
+
+    Pokemon newPokemon(String name, int pv) {
+        Pokemon pokemon = new Pokemon();
+        pokemon.name = name;
+        pokemon.pv = pv;
+        return pokemon;
+    }
     Move newMove(String name,Type type,int power, boolean physique, boolean speciale, boolean statut, boolean staab,String description){
         Move move = new Move();
         move.name = name;
@@ -25,6 +32,13 @@ class Pokemath extends Program{
         move.speciale = speciale;
         move.statut = statut;
         move.description = description;
+        return move;
+    }
+
+    Move newMove(String name, int power) {
+        Move move = new Move();
+        move.name = name;
+        move.power = power;
         return move;
     }
     //si le type de l'attaque est le même que le type du pokemon, le bonus est de 1.5
@@ -95,19 +109,25 @@ class Pokemath extends Program{
         return true;
     }
 
-    /*void attaquer(Pokemon poke1, Pokemon poke2) {
-        /*poke2.pv = poke2.pv - poke1.move;
-        println(poke1.name + "a utilisé [nom_attaque] sur " + poke2.name);
-        poke1.pv = poke1.pv - poke2.;
-        println(poke2.name + "a utilisé [nom_attaque] sur " + poke1.name);
-    }*/
 
-    /*void combat(Pokemon[] pokeJ1, Pokemon[] pokeJ2) { //test
-        while(toutLesPokeSontKO(pokeJ1) || toutLesPokeSontKO(pokeJ2)) {
-            attaquer(pokeJ1, pokeJ2);
-            attaquer(pokeJ1, pokeJ2);
-       
-    }*/
+    int pvRestantApresAttaque(Pokemon pokemon, Move attaqueUtilise) {
+        int pvRestant = pokemon.pv - attaqueUtilise.power;
+        if (pvRestant < 0) {
+            pvRestant = 0;
+        }
+        return pvRestant;
+    }
+
+    boolean poserQuestionCombienDePvRestant(Pokemon PokemonAdversaire, Move attaqueUtilise) {
+        println("Vous infligez " + attaqueUtilise.power + " dégats");
+        println("Il reste " + PokemonAdversaire.pv + "pv au pokemon adverse");
+        println("Combien reste t'il de pv au pokemon adverse ? ");
+        if (readInt() == pvRestantApresAttaque(PokemonAdversaire, attaqueUtilise)) {
+            return true;
+        }
+        return false;
+    }    
+
     String[] initniveau(int nombre){
         String[] tab = new String[nombre];
         int nbniveau = 1;
@@ -129,7 +149,7 @@ class Pokemath extends Program{
             println();
         }
     } 
-    void algorithm(){
+    void _algorithm(){
         clearScreen();
         String intro = "Bonjour toi moi c'est Armandino";
         /*for(int i = 0;i<length(test);i++){
@@ -140,6 +160,7 @@ class Pokemath extends Program{
         CSVFile ListePokemon = loadCSV("ListePokemon.csv");
        // println(getCell(ListePokemon,1,0)); permet de recup les info dun pokemon
         println(toString(initniveau(3)));
+        println("Veillez selectionner un niveau : ");
         int choixniveau = readInt();
         String choixlvl ="Vous avez choisi le niveau " + choixniveau;
         if(choixniveau == 1){
@@ -149,5 +170,12 @@ class Pokemath extends Program{
         }else if(choixniveau == 3){
             println(choixlvl);
         }
+    }
+
+    void testPvRestantApresAttaque() {
+        Pokemon pokemon = newPokemon("Fred", 160);
+        Move move = newMove("Tacle", 30);
+        assertEquals(130, pvRestantApresAttaque(pokemon, move));
+
     }
 }
