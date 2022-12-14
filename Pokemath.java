@@ -126,7 +126,17 @@ class Pokemath extends Program{
             return true;
         }
         return false;
-    }    
+    }
+
+    void jouerNiveau(int numNiveau) {
+        Pokemon pokemon = newPokemon("Fred", 160);
+        Move move = newMove("Tacle", 30);
+        if (poserQuestionCombienDePvRestant(pokemon, move)) {
+            println("Bravo ! La réponse était bien " + pvRestantApresAttaque(pokemon, move) + " pv");
+        } else {
+            println("Perdu :( La réponse était " + pvRestantApresAttaque(pokemon, move) + " pv");
+        }
+    }
 
     int choisirNiveau(){
         String[] liste = new String[]{"Piège de Rock", "Flamme Fourbe", "Herbe Surprise", "Métal Solide", "Roche Froide"};
@@ -160,7 +170,7 @@ class Pokemath extends Program{
         println();
         CSVFile ListePokemon = loadCSV("ListePokemon.csv");
        // println(getCell(ListePokemon,1,0)); permet de recup les info dun pokemon
-        int choixniveau = choisirNiveau();
+        jouerNiveau(choisirNiveau());
     }
 
     void testPvRestantApresAttaque() {
