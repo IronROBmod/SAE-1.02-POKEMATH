@@ -128,14 +128,19 @@ class Pokemath extends Program{
         return false;
     }    
 
-    String[] initniveau(int nombre){
-        String[] tab = new String[nombre];
-        int nbniveau = 1;
-        for(int i = 0;i<nombre;i++){
-            tab[i] ="Niveau " + nbniveau;
-            nbniveau++;
+    int choisirNiveau(){
+        String[] liste = new String[]{"Piège de Rock", "Flamme Fourbe", "Herbe Surprise", "Métal Solide", "Roche Froide"};
+        println("Liste des niveaux disponibles :");
+        println();
+        for(int idx = 0; idx < length(liste); idx++) {
+            println("Niveau " + (idx + 1) + " : " + liste[idx]);
         }
-        return tab;
+        println();
+        print("Saisissez le niveau que vous voulez lancer : ");
+        int choixniveau = readInt();
+        println();
+        println("Vous avez choisi le niveau " + choixniveau + " : " + liste[choixniveau - 1]);
+        return choixniveau - 1;
     }
     String toString(String[] tab){
         String str = "";
@@ -149,27 +154,13 @@ class Pokemath extends Program{
             println();
         }
     } 
-    void _algorithm(){
-        clearScreen();
-        String intro = "Bonjour toi moi c'est Armandino";
-        /*for(int i = 0;i<length(test);i++){
-            print(charAt(test,i));
-            delay(100);
-        }*/
+    void algorithm(){
+        clearScreen2();
+        println("Bonjour toi moi c'est Armandino");
         println();
         CSVFile ListePokemon = loadCSV("ListePokemon.csv");
        // println(getCell(ListePokemon,1,0)); permet de recup les info dun pokemon
-        println(toString(initniveau(3)));
-        println("Veillez selectionner un niveau : ");
-        int choixniveau = readInt();
-        String choixlvl ="Vous avez choisi le niveau " + choixniveau;
-        if(choixniveau == 1){
-            println(choixlvl);
-        }else if(choixniveau == 2){
-            println(choixlvl);
-        }else if(choixniveau == 3){
-            println(choixlvl);
-        }
+        int choixniveau = choisirNiveau();
     }
 
     void testPvRestantApresAttaque() {
