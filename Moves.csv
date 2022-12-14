@@ -1,8 +1,14 @@
 NAME;ELEMENT;TYPE;POWER;description
-Ã‰clair;ELECTRIQUE;SPECIAL;40;Une dÃ©charge Ã©lectrique tombe sur lâ€™ennemi. Peut aussi le paralyser.
-Mimi-Queue;NORMAL;AUTRE;0;Le lanceur remue son adorable queue pour tromper la vigilance de lâ€™ennemi et baisser sa DÃ©fense.
-Lame d'Air;VOL;SPECIAL;75;Le lanceur attaque avec une lame dâ€™air qui fend tout. Peut aussi apeurer lâ€™ennemi.
-Griffe;NORMAL;PHYSIQUE;40;LacÃ¨re lâ€™ennemi avec des griffes acÃ©rÃ©es pour lui infliger des dÃ©gÃ¢ts.
-Dracogriffe;DRAGON;PHYSIQUE;80;Le lanceur lacÃ¨re lâ€™ennemi de ses grandes griffes aiguisÃ©es.
-Presse;NORMAL;PHYSIQUE;0;Une force puissante Ã©crase lâ€™ennemi. Plus il lui reste de PV et plus lâ€™attaque est puissante.
-Clairvoyance;NORMAL;AUTRE;0;Permet de toucher un PokÃ©mon Spectre avec nâ€™importe quelle capacitÃ© et de toucher un ennemi insaisissable.
+Eclair;ELECTRIQUE;SPECIAL;40;Une decharge electrique tombe sur l'ennemi. Peut aussi le paralyser.
+Mimi-Queue;NORMAL;STATUE;0;Le lanceur remue son adorable queue pour tromper la vigilance de l'ennemi et baisser sa Defense.
+Lame d'Air;FLYING;SPECIAL;75;Le lanceur attaque avec une lame d'air qui fend tout. Peut aussi apeurer l'ennemi.
+Griffe;NORMAL;PHYSIQUE;40;Lacère l'ennemi avec des griffes acerees pour lui infliger des degats.
+Dracogriffe;DRAGON;PHYSIQUE;80;Le lanceur lacère l'ennemi de ses grandes griffes aiguisees.
+Presse;NORMAL;PHYSIQUE;0;Une force puissante ecrase l'ennemi. Plus il lui reste de PV et plus l'attaque est puissante.
+Clairvoyance;NORMAL;STATUE;0;Permet de toucher un Pokemon Spectre avec n'importe quelle capacite et de toucher un ennemi insaisissable.
+Pieges de roc;ROCHE;STATUE;0;"La capacité pose des roches pointues du côté adverse, blessant chaque Pokémon arrivant sur le terrain. Elle échoue si l'effet est déjà actif sur le terrain adverse. Le talent Miroir Magik renvoie les Piège de Roc du côté du lanceur. Les ennemis perdent des PVs maximums en fonction de leur faiblesse au type Roche.
+S'ils ont une double résistance (x025), ils prennent 3.125% (1/32).
+S'ils ont une resistance (0.5x), ils prennent 6.25% (1/16).
+S'ils sont neutres (x1), ils prennent 12.5% (1/8).
+S'ils ont une faiblesse (x2), ils prennent 25% (1/4).
+S'ils ont une double faiblesse (x4), ils prennent 50% (1/2)."
