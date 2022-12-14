@@ -124,7 +124,7 @@ class Pokemath extends Program{
         }
         return str;
     }
-    void clearScreen(){
+    void clearScreen2(){ // Le nom n'est pas valide apparement
         for(int i = 0;i<100;i++){
             println();
         }
@@ -132,10 +132,10 @@ class Pokemath extends Program{
     void algorithm(){
         clearScreen();
         String intro = "Bonjour toi moi c'est Armandino";
-        for(int i = 0;i<length(test);i++){
+        /*for(int i = 0;i<length(test);i++){
             print(charAt(test,i));
             delay(100);
-        } 
+        }*/
         println();
         CSVFile ListePokemon = loadCSV("ListePokemon.csv");
        // println(getCell(ListePokemon,1,0)); permet de recup les info dun pokemon
