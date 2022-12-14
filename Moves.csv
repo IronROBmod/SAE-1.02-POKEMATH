@@ -2,13 +2,8 @@ NAME;ELEMENT;TYPE;POWER;description
 Eclair;ELECTRIQUE;SPECIAL;40;Une decharge electrique tombe sur l'ennemi. Peut aussi le paralyser.
 Mimi-Queue;NORMAL;STATUE;;Le lanceur remue son adorable queue pour tromper la vigilance de l'ennemi et baisser sa Defense.
 Lame d'Air;FLYING;SPECIAL;75;Le lanceur attaque avec une lame d'air qui fend tout. Peut aussi apeurer l'ennemi.
-Griffe;NORMAL;PHYSIQUE;40;Lacère l'ennemi avec des griffes acerees pour lui infliger des degats.
-Dracogriffe;DRAGON;PHYSIQUE;80;Le lanceur lacère l'ennemi de ses grandes griffes aiguisees.
+Griffe;NORMAL;PHYSIQUE;40;Lacï¿½re l'ennemi avec des griffes acerees pour lui infliger des degats.
+Dracogriffe;DRAGON;PHYSIQUE;80;Le lanceur lacï¿½re l'ennemi de ses grandes griffes aiguisees.
 Presse;NORMAL;PHYSIQUE;;Une force puissante ecrase l'ennemi. Plus il lui reste de PV et plus l'attaque est puissante.
 Clairvoyance;NORMAL;STATUE;;Permet de toucher un Pokemon Spectre avec n'importe quelle capacite et de toucher un ennemi insaisissable.
-Pieges de roc;ROCHE;STATUE;;"La capacité pose des roches pointues du côté adverse, blessant chaque Pokémon arrivant sur le terrain. Elle échoue si l'effet est déjà actif sur le terrain adverse. Le talent Miroir Magik renvoie les Piège de Roc du côté du lanceur. Les ennemis perdent des PVs maximums en fonction de leur faiblesse au type Roche.
-S'ils ont une double résistance (x025), ils prennent 3.125% (1/32).
-S'ils ont une resistance (0.5x), ils prennent 6.25% (1/16).
-S'ils sont neutres (x1), ils prennent 12.5% (1/8).
-S'ils ont une faiblesse (x2), ils prennent 25% (1/4).
-S'ils ont une double faiblesse (x4), ils prennent 50% (1/2)."
+Pieges de roc;ROCHE;STATUE;;"La capacitï¿½ pose des roches pointues du cï¿½tï¿½ adverse, blessant chaque Pokï¿½mon arrivant sur le terrain. Elle ï¿½choue si l'effet est dï¿½jï¿½ actif sur le terrain adverse. Le talent Miroir Magik renvoie les Piï¿½ge de Roc du cï¿½tï¿½ du lanceur. Les ennemis perdent des PVs maximums en fonction de leur faiblesse au type Roche."
