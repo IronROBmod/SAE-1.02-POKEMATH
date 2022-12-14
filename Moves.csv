@@ -1,0 +1,8 @@
+NAME;ELEMENT;TYPE;POWER;description
+Éclair;ELECTRIQUE;SPECIAL;40;Une décharge électrique tombe sur l’ennemi. Peut aussi le paralyser.
+Mimi-Queue;NORMAL;AUTRE;0;Le lanceur remue son adorable queue pour tromper la vigilance de l’ennemi et baisser sa Défense.
+Lame d'Air;VOL;SPECIAL;75;Le lanceur attaque avec une lame d’air qui fend tout. Peut aussi apeurer l’ennemi.
+Griffe;NORMAL;PHYSIQUE;40;Lacère l’ennemi avec des griffes acérées pour lui infliger des dégâts.
+Dracogriffe;DRAGON;PHYSIQUE;80;Le lanceur lacère l’ennemi de ses grandes griffes aiguisées.
+Presse;NORMAL;PHYSIQUE;0;Une force puissante écrase l’ennemi. Plus il lui reste de PV et plus l’attaque est puissante.
+Clairvoyance;NORMAL;AUTRE;0;Permet de toucher un Pokémon Spectre avec n’importe quelle capacité et de toucher un ennemi insaisissable.
