@@ -139,14 +139,16 @@ class Pokemath extends Program{
             delay(100);
         } 
         println();
+        loadCSV("ListePokemon.csv",';');
         println(toString(initniveau(3)));
         int choixniveau = readInt();
-        if(choixniveau == 1){
-            println("Vous avez choisi le niveau 1");
-        }else if(choixniveau == 2){
-            println("Vous avez choisi le niveau 2");
-        }else if(choixniveau == 3){
-            println("Vous avez choisi le niveau 3");
-        }
+               String choixlvl ="Vous avez choisi le niveau " + choixniveau;
+            if(choixniveau == 1){
+                println(choixlvl);
+            }else if(choixniveau == 2){
+                println(choixlvl);
+            }else if(choixniveau == 3){
+                println(choixlvl);
+            }
     }
 }
