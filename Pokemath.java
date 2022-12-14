@@ -1,3 +1,4 @@
+import extensions.CSVFile;
 class Pokemath extends Program{
    // int formuleDegats =  (((((((poke.niveau × 2 ÷ 5) + 2) × move.power × Att[Spé] ÷ 50) ÷ Def[Spé]) × Mod1) + 2) × CC × Mod2 × R ÷ 100) × STAB × Type1 × Type2 × Mod3;
     Pokemon newPokemon(String name, int niveau, int pv,int attack,int attackSpe,int defense,int defenseSpe,int vitesse,Type type1,Type type2,Move[] attaques){
@@ -123,32 +124,30 @@ class Pokemath extends Program{
         }
         return str;
     }
+    void clearScreen(){
+        for(int i = 0;i<100;i++){
+            println();
+        }
+    } 
     void algorithm(){
         clearScreen();
-        println("Veuillez choisir une langue de préférence :" + "\n" + "1 : FR" + "\n" + "2 : EN");
-        int choix = readInt();
-        String test = "";
-        if(choix == 1){
-            test = "Bonjour toi moi c'est Armandino";
-        }else if(choix == 2){
-            test = "Hello you I'm Armandino";
-        }
-        clearScreen();
+        String intro = "Bonjour toi moi c'est Armandino";
         for(int i = 0;i<length(test);i++){
             print(charAt(test,i));
             delay(100);
         } 
         println();
-        loadCSV("ListePokemon.csv",';');
+        CSVFile ListePokemon = loadCSV("ListePokemon.csv");
+       // println(getCell(ListePokemon,1,0)); permet de recup les info dun pokemon
         println(toString(initniveau(3)));
         int choixniveau = readInt();
         String choixlvl ="Vous avez choisi le niveau " + choixniveau;
         if(choixniveau == 1){
             println(choixlvl);
-            }else if(choixniveau == 2){
-                println(choixlvl);
-            }else if(choixniveau == 3){
-                println(choixlvl);
-            }
+        }else if(choixniveau == 2){
+            println(choixlvl);
+        }else if(choixniveau == 3){
+            println(choixlvl);
+        }
     }
 }
