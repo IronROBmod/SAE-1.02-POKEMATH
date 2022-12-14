@@ -12,11 +12,7 @@ class Pokemath extends Program{
         poke.vitesse = vitesse;
         poke.type1 = type1;
         poke.type2 = type2;
-        poke.move1 = move1;
-        poke.move2 = move2;
-        poke.move3 = move3;
-        poke.move4 = move4;
-        Move[] attaques = new Move[4];
+        attaques = new Move[4];
         return poke;
     }
     Move newMove(String name,Type type,int power, boolean physique, boolean speciale, boolean statut, boolean staab,String description){
@@ -64,13 +60,6 @@ class Pokemath extends Program{
         return move;
     }
 
-    // defini si le pokemon apartiens au joueur ou au bot
-
-    Pokemon isPlayer(Pokemon pokemon){
-        pokemon.player = true;
-        return pokemon;
-    }
-
 
     String toString(Pokemon poke){
         String str = "";
@@ -87,10 +76,10 @@ class Pokemath extends Program{
             str = str + "\n" + poke.type2;
         }
         str = str + "\n" + 
-            poke.attaque[0].name + " | " + 
-            poke.attaque[1].name + " | " + 
-            poke.attaque[2].name + " | " + 
-            poke.attaque[3].name;
+            poke.attaques[0].name + " | " + 
+            poke.attaques[1].name + " | " + 
+            poke.attaques[2].name + " | " + 
+            poke.attaques[3].name;
 
         return str;
     }
