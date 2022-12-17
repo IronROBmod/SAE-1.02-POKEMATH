@@ -1,6 +1,6 @@
 class Move{
     String name;
-    Element type;
+    Element element;
     int power;
     Categorie categorie;
     String description;
