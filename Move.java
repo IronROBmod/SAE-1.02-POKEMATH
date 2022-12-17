@@ -1,9 +1,7 @@
 class Move{
     String name;
-    Type type;
+    Element type;
     int power;
-    boolean physique;
-    boolean speciale;
-    boolean statut;
+    Categorie categorie;
     String description;
 }

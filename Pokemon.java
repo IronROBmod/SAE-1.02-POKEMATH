@@ -7,7 +7,7 @@ public class Pokemon{
     int defense;
     int defenseSpe;
     int vitesse;
-    Type type1;
-    Type type2;
+    Element type1;
+    Element type2;
     Move[] attaques;
 }

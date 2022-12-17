@@ -1,7 +1,7 @@
 import extensions.CSVFile;
 class Pokemath extends Program{
    // int formuleDegats =  (((((((poke.niveau × 2 ÷ 5) + 2) × move.power × Att[Spé] ÷ 50) ÷ Def[Spé]) × Mod1) + 2) × CC × Mod2 × R ÷ 100) × STAB × Type1 × Type2 × Mod3;
-    Pokemon newPokemon(String name, int niveau, int pv,int attack,int attackSpe,int defense,int defenseSpe,int vitesse,Type type1,Type type2,Move[] attaques){
+    Pokemon newPokemon(String name, int niveau, int pv,int attack,int attackSpe,int defense,int defenseSpe,int vitesse,Element type1,Element type2,Move[] attaques){
         Pokemon poke = new Pokemon();
         poke.name = name;
         poke.niveau = niveau;
@@ -23,14 +23,12 @@ class Pokemath extends Program{
         pokemon.pv = pv;
         return pokemon;
     }
-    Move newMove(String name,Type type,int power, boolean physique, boolean speciale, boolean statut, boolean staab,String description){
+    Move newMove(String name,Element type,int power, Categorie categorie, boolean staab,String description){
         Move move = new Move();
         move.name = name;
         move.type = type;
         move.power = power;
-        move.physique = physique;
-        move.speciale = speciale;
-        move.statut = statut;
+        move.categorie = categorie;
         move.description = description;
         return move;
     }
