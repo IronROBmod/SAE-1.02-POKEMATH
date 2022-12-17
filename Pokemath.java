@@ -39,6 +39,24 @@ class Pokemath extends Program{
         move.power = power;
         return move;
     }
+
+    CSVFile loadListMoves() {
+        return loadCSV("ListeAttaques.csv", ';');
+    }
+
+    String[] getMove(CSVFile listMoves, String name) {
+        for(int idx = 1; idx < rowCount(listMoves); idx++) {
+            if (equals(getCell(listMoves, idx, 0), name)) {
+                String[] move = new String[columnCount(listMoves, idx)];
+                for(int idx2 = 0; idx2 < columnCount(listMoves, idx); idx2++) {
+                    move[idx2] = getCell(listMoves, idx, idx2);
+                }
+                return move;
+            }
+        }
+        return new String[columnCount(listMoves)];
+    }
+
     //si le type de l'attaque est le même que le type du pokemon, le bonus est de 1.5
 
     double isStaab(Move move, Pokemon pokemon){
@@ -162,7 +180,7 @@ class Pokemath extends Program{
             println();
         }
     } 
-    void algorithm(){
+    void _algorithm(){
         clearScreen2();
         println("Bonjour toi moi c'est Armandino");
         println();
@@ -176,5 +194,10 @@ class Pokemath extends Program{
         Move move = newMove("Tacle", 30);
         assertEquals(130, pvRestantApresAttaque(pokemon, move));
 
+    }
+
+    void testGetMove() {
+        assertArrayEquals(new String[]{"Recyclage", "Recycle","-","-","-","10","NORMAL","AUTRE","Recycle un objet tenu à usage unique déjà utilisé lors du combat pour pouvoir l’utiliser à nouveau."}, getMove(loadListMoves(), "Recyclage"));
+        assertArrayEquals(new String[]{"Flash","Flash","-","100","-","20","NORMAL","AUTRE","Explosion lumineuse qui fait baisser la Précision de l’ennemi. Permet aussi d’éclairer les grottes."}, getMove(loadListMoves(), "Flash"));
     }
 }
