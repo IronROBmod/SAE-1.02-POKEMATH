@@ -3,6 +3,11 @@ import extensions.File;
 class Pokemath extends Program{
     // int formuleDegats =  (((((((poke.niveau × 2 ÷ 5) + 2) × move.power × Att[Spé] ÷ 50) ÷ Def[Spé]) × Mod1) + 2) × CC × Mod2 × R ÷ 100) × STAB × Type1 × Type2 × Mod3;
     // Fonction pour créer un nouveau pokemon selon les stats données
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //                        FONCTIONS DE CRÉATION DE CLASSES                    //
+    ////////////////////////////////////////////////////////////////////////////////
+
     Pokemon newPokemon(String name, int niveau, int pv,int attack,int attackSpe,int defense,int defenseSpe,int vitesse,Element type1,Element type2,Move[] attaques){
         Pokemon poke = new Pokemon();
         poke.name = name;
@@ -37,6 +42,18 @@ class Pokemath extends Program{
         return move;
     }
 
+       // Fonction simplifié de création de move
+    Move newMove(String name, int power) {
+        Move move = new Move();
+        move.name = name;
+        move.power = power;
+        return move;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //                   FONCTIONS DE TRANSFORMATION EN CHAINE                    //
+    ////////////////////////////////////////////////////////////////////////////////
+
     String toString(Move move){
         String str = move.name + "\n" + move.element + "\n" + move.power + "\n" + move.categorie;
         return str;
@@ -46,14 +63,11 @@ class Pokemath extends Program{
         } 
         */
     }
-    // Fonction simplifié de création de move
-    Move newMove(String name, int power) {
-        Move move = new Move();
-        move.name = name;
-        move.power = power;
-        return move;
-    }
-
+ 
+    ////////////////////////////////////////////////////////////////////////////////
+    //                        FONCTIONS DE CHANGEMENT DE TYPE                     //
+    ////////////////////////////////////////////////////////////////////////////////
+    
     // Foncton qui convertit une chaine contenat un nombre en un entier
     int toInt(String str) {
         int idx = length(str) - 1;
@@ -68,27 +82,17 @@ class Pokemath extends Program{
         return sum;
     }
 
-    // fonction qui charche le fichier contenant la liste des moves
-    CSVFile loadListMoves() {
-        return loadCSV("../ressources/ListeAttaques.csv", ';');
-    }
-    void teststringToElement(){
-        assertEquals(Element.ACIER,stringToElement("ACIER"));
-        assertEquals(Element.NORMAL,stringToElement("NORMAL"));
-        assertEquals(Element.FEE,stringToElement("FEE"));
+        Categorie stringToCategorie(String chaine){
+        if(equals(chaine,"SPECIALE")){
+            return Categorie.SPECIALE;
+        }if(equals(chaine,"PHYSIQUE")){
+            return Categorie.PHYSIQUE;
+        }else{
+            return Categorie.STATUT;
+        }
     }
 
-Categorie stringToCategorie(String chaine){
-    if(equals(chaine,"SPECIALE")){
-        return Categorie.SPECIALE;
-    }if(equals(chaine,"PHYSIQUE")){
-        return Categorie.PHYSIQUE;
-    }else{
-        return Categorie.STATUT;
-    }
-}
-
-    Element stringToElement(String chaine){
+        Element stringToElement(String chaine){
         if(equals(chaine, "ACIER")){
             return Element.ACIER;
         }else if(equals(chaine, "COMBAT")){
@@ -127,6 +131,60 @@ Categorie stringToCategorie(String chaine){
             return Element.NORMAL;
         } 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    // fonction qui charche le fichier contenant la liste des moves
+    CSVFile loadListMoves() {
+        return loadCSV("../ressources/ListeAttaques.csv", ';');
+    }
+    void teststringToElement(){
+        assertEquals(Element.ACIER,stringToElement("ACIER"));
+        assertEquals(Element.NORMAL,stringToElement("NORMAL"));
+        assertEquals(Element.FEE,stringToElement("FEE"));
+    }
+
+
+
+
     String[] getMove(CSVFile listMoves, String name) {
         for(int idx = 1; idx < rowCount(listMoves); idx++) {
             if (equals(getCell(listMoves, idx, 0), name)) {
@@ -145,39 +203,26 @@ Categorie stringToCategorie(String chaine){
         return newMove(listeMoves[0], stringToElement(listeMoves[6]), toInt(listeMoves[2]), stringToCategorie(listeMoves[7]), listeMoves[8]);
     }
 
-    //si le type de l'attaque est le même que le type du pokemon, le bonus est de 1.5
-
-    double isStaab(Move move, Pokemon pokemon){
-        double staab = 1.0;
-        if(move.element == pokemon.type1 || move.element == pokemon.type2){
-            staab = 1.5 ;
+/*
+    String[] getPokemon(CSVFile listPoke, String name) {
+            for(int idx = 1; idx < rowCount(listPoke); idx++) {
+                if (equals(getCell(listPoke, idx, 0), name)) {
+                    String[] poke = new String[columnCount(listPoke, idx)];
+                    for(int idx2 = 0; idx2 < columnCount(listPoke, idx); idx2++) {
+                        poke[idx2] = getCell(listPoke, idx, idx2);
+                    }
+                    return poke;
+                }
+            }
+            return new String[columnCount(listMoves)];
         }
-        return staab;
+        
+        Pokemon getPoke(String name) {
+        String[] listePoke = getPoke(loadListPoke(), name);
+        return newPokemon(listePoke[0], stringToElement(listeMoves[6]), toInt(listeMoves[2]), stringToCategorie(listeMoves[7]), listeMoves[8]);
     }
-    //si le type de l'attaque est le même que le type du pokemon adverse, le malus est de 0.5
-
-    Move isFaible(Move move, Pokemon pokemon){
-        if(move.element == pokemon.type1 || move.element == pokemon.type2){
-            move.power =move.power-(move.power/2);
-        }
-        return move;
-    }
-    //si le type de l'attaque est le faible que les types du pokemon adverse, le malus est de 2
-
-    Move isSuperFaible(Move move, Pokemon pokemon){
-        if(move.element == pokemon.type1 && move.element == pokemon.type2){
-            move.power =move.power-(move.power);
-        }
-        return move;
-    } 
-    //si le type de l'attaque est une faiblesse aux types du pokemon adverse, le bonus est de 4
-
-    Move isSuperStrenght(Move move, Pokemon pokemon){
-        if(move.element == pokemon.type1 && move.element == pokemon.type2){
-            move.power =move.power+(move.power*3);
-        }
-        return move;
-    }
+    
+    */
 
     // Fonction qui affiche les stats d'un Pokemon
     String toString(Pokemon poke){
@@ -272,7 +317,7 @@ Categorie stringToCategorie(String chaine){
         
     }
 
-// Fonctions de test
+    // Fonctions de test
 
     void testPvRestantApresAttaque() {
         Pokemon pokemon = newPokemon("Fred", 160);
@@ -294,12 +339,37 @@ Categorie stringToCategorie(String chaine){
         println(toString(getMove("Charge")));
     }
     
+        //si le type de l'attaque est le même que le type du pokemon, le bonus est de 1.5
 
+    double isStaab(Move move, Pokemon pokemon){
+        double staab = 1.0;
+        if(move.element == pokemon.type1 || move.element == pokemon.type2){
+            staab = 1.5 ;
+        }
+        return staab;
+    }
+    //si le type de l'attaque est le même que le type du pokemon adverse, le malus est de 0.5
 
+    Move isFaible(Move move, Pokemon pokemon){
+        if(move.element == pokemon.type1 || move.element == pokemon.type2){
+            move.power =move.power-(move.power/2);
+        }
+        return move;
+    }
+    //si le type de l'attaque est le faible que les types du pokemon adverse, le malus est de 2
 
+    Move isSuperFaible(Move move, Pokemon pokemon){
+        if(move.element == pokemon.type1 && move.element == pokemon.type2){
+            move.power =move.power-(move.power);
+        }
+        return move;
+    } 
+    //si le type de l'attaque est une faiblesse aux types du pokemon adverse, le bonus est de 4
 
-
-
-
-
+    Move isSuperStrenght(Move move, Pokemon pokemon){
+        if(move.element == pokemon.type1 && move.element == pokemon.type2){
+            move.power =move.power+(move.power*3);
+        }
+        return move;
+    }
 }
