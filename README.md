@@ -1,13 +1,25 @@
-# SAE-1.02-POKEMATH
+<POKEMATH>
+===========
 
-Auteurs : Théo Cattaneo, Hocine Chebout
+Développé par <Hocine CHEBOUT> <Théo CATTANEO>
+Contacts : <hocine.chebout.etu@univ-lille.fr> , <theo.cattaneo.etu@univ-lille.fr>
 
-Pokemath est un logiciel éducatif dans lequel un élève doit faire des calculs dans un colbat Pokemon
+# Présentation de POKEMATH
 
-Ouvrez un terminal dans le dossier contenant les fichiers de code puis :
+<Description de votre jeu>
+Des captures d'écran illustrant le fonctionnement du logiciel sont proposées dans le répertoire shots.
 
-Pour compliler le programme :
-ijavac PokeMath.java
 
-Pour lancer le Programme :
-ijava PokeMath
+# Utilisation de <le nom de votre jeu>
+
+Afin d'utiliser le projet, il suffit de taper les commandes suivantes dans un terminal :
+
+```
+./compile.sh
+```
+Permet la compilation des fichiers présents dans 'src' et création des fichiers '.class' dans 'classes'
+
+```
+./run.sh <mettre ici le nom de votre classe (programme) principal>
+```
+Permet le lancement du jeu
