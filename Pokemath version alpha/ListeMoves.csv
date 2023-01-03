@@ -1,0 +1,9 @@
+NAME;ELEMENT;TYPE;POWER;description
+Eclair;ELECTRIQUE;SPECIAL;40;Une decharge electrique tombe sur l'ennemi. Peut aussi le paralyser.
+Mimi-Queue;NORMAL;STATUE;;Le lanceur remue son adorable queue pour tromper la vigilance de l'ennemi et baisser sa Defense.
+Lame d'Air;FLYING;SPECIAL;75;Le lanceur attaque avec une lame d'air qui fend tout. Peut aussi apeurer l'ennemi.
+Griffe;NORMAL;PHYSIQUE;40;Lacère l'ennemi avec des griffes acerees pour lui infliger des degats.
+Dracogriffe;DRAGON;PHYSIQUE;80;Le lanceur lacère l'ennemi de ses grandes griffes aiguisees.
+Presse;NORMAL;PHYSIQUE;;Une force puissante ecrase l'ennemi. Plus il lui reste de PV et plus l'attaque est puissante.
+Clairvoyance;NORMAL;STATUE;;Permet de toucher un Pokemon Spectre avec n'importe quelle capacite et de toucher un ennemi insaisissable.
+Pieges de roc;ROCHE;STATUE;;La capacité pose des roches pointues du côt� adverse blessant chaque Pok�mon arrivant sur le terrain. Elle �choue si l'effet est d�j� actif sur le terrain adverse. Le talent Miroir Magik renvoie les Pi�ge de Roc du c�t� du lanceur. Les ennemis perdent des PVs maximums en fonction de leur faiblesse au type Roche."
