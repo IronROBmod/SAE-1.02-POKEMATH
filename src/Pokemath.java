@@ -1,4 +1,5 @@
 import extensions.CSVFile;
+import extensions.File;
 class Pokemath extends Program{
     // int formuleDegats =  (((((((poke.niveau × 2 ÷ 5) + 2) × move.power × Att[Spé] ÷ 50) ÷ Def[Spé]) × Mod1) + 2) × CC × Mod2 × R ÷ 100) × STAB × Type1 × Type2 × Mod3;
     // Fonction pour créer un nouveau pokemon selon les stats données
@@ -53,7 +54,7 @@ class Pokemath extends Program{
         return move;
     }
 
-    // Foncton qui convertit une  haine contenat un nombre en un entier
+    // Foncton qui convertit une chaine contenat un nombre en un entier
     int toInt(String str) {
         int idx = length(str) - 1;
         int multi = 1;
@@ -69,8 +70,24 @@ class Pokemath extends Program{
 
     // fonction qui charche le fichier contenant la liste des moves
     CSVFile loadListMoves() {
-        return loadCSV("ListeAttaques.csv", ';');
+        return loadCSV("../ressources/ListeAttaques.csv", ';');
     }
+    void teststringToElement(){
+        assertEquals(Element.ACIER,stringToElement("ACIER"));
+        assertEquals(Element.NORMAL,stringToElement("NORMAL"));
+        assertEquals(Element.FEE,stringToElement("FEE"));
+    }
+
+Categorie stringToCategorie(String chaine){
+    if(equals(chaine,"SPECIALE")){
+        return Categorie.SPECIALE;
+    }if(equals(chaine,"PHYSIQUE")){
+        return Categorie.PHYSIQUE;
+    }else{
+        return Categorie.STATUT;
+    }
+}
+
     Element stringToElement(String chaine){
         if(equals(chaine, "ACIER")){
             return Element.ACIER;
@@ -111,7 +128,6 @@ class Pokemath extends Program{
         } 
     }
     String[] getMove(CSVFile listMoves, String name) {
-        println("banane");
         for(int idx = 1; idx < rowCount(listMoves); idx++) {
             if (equals(getCell(listMoves, idx, 0), name)) {
                 String[] move = new String[columnCount(listMoves, idx)];
@@ -125,9 +141,8 @@ class Pokemath extends Program{
     }
 
     Move getMove(String name) {
-        println("patate");
-        String [] listeMoves = getMove(loadListMoves(), name);
-        return newMove(listeMoves[0], Element.FEU, toInt(listeMoves[2]), Categorie.SPECIALE, listeMoves[8]);
+        String[] listeMoves = getMove(loadListMoves(), name);
+        return newMove(listeMoves[0], stringToElement(listeMoves[6]), toInt(listeMoves[2]), stringToCategorie(listeMoves[7]), listeMoves[8]);
     }
 
     //si le type de l'attaque est le même que le type du pokemon, le bonus est de 1.5
@@ -241,14 +256,20 @@ class Pokemath extends Program{
         println("Vous avez choisi le niveau " + choixniveau + " : " + liste[choixniveau - 1]);
         return choixniveau - 1;
     }
+    
     // Algo Principale
-    void _algorithm(){
+    void algorithm(){
         clearScreen();
+        File test = newFile("../ressources/title.txt");
+         while (ready(test)){
+            println(readLine(test));
+        }
         println("Bienvenue sur PokeMath !");
         println();
-        CSVFile ListePokemon = loadCSV("ListePokemon.csv");
-       // println(getCell(ListePokemon,1,0)); permet de recup les info dun pokemon
+        CSVFile ListePokemon = loadCSV("../ressources/ListePokemon.csv");
+       //println(getCell(ListePokemon,1,0)); permet de recup les info dun pokemon
         jouerNiveau(choisirNiveau());
+        
     }
 
 // Fonctions de test
@@ -268,9 +289,17 @@ class Pokemath extends Program{
     void testToInt() {
         assertEquals(123, toInt("123"));
     }
-/*
+
     void testGetMove2() {
         println(toString(getMove("Charge")));
     }
-    */
+    
+
+
+
+
+
+
+
+
 }

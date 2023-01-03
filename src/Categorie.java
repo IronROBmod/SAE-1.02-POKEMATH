@@ -1,3 +1,3 @@
 enum Categorie{
-    PHYSIQUE, SPECIALE, AUTRE;
+    PHYSIQUE, SPECIALE, STATUT;
 }

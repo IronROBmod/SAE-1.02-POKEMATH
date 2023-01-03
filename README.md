@@ -20,6 +20,6 @@ Afin d'utiliser le projet, il suffit de taper les commandes suivantes dans un te
 Permet la compilation des fichiers présents dans 'src' et création des fichiers '.class' dans 'classes'
 
 ```
-./run.sh <mettre ici le nom de votre classe (programme) principal>
+./run.sh Pokemath
 ```
 Permet le lancement du jeu
