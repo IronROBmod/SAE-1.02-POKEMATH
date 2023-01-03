@@ -35,6 +35,16 @@ class Pokemath extends Program{
         move.description = description;
         return move;
     }
+
+    String toString(Move move){
+        String str = move.name + "\n" + move.element + "\n" + move.power + "\n" + move.categorie;
+        return str;
+        /*if(!modeeasy && move.description != null){
+            str = str + "\n" + move.description;
+            return str;
+        } 
+        */
+    }
     // Fonction simplifié de création de move
     Move newMove(String name, int power) {
         Move move = new Move();
@@ -44,7 +54,7 @@ class Pokemath extends Program{
     }
 
     // Foncton qui convertit une  haine contenat un nombre en un entier
-    int ToInt(String str) {
+    int toInt(String str) {
         int idx = length(str) - 1;
         int multi = 1;
         int sum = 0;
@@ -61,8 +71,47 @@ class Pokemath extends Program{
     CSVFile loadListMoves() {
         return loadCSV("ListeAttaques.csv", ';');
     }
-
+    Element stringToElement(String chaine){
+        if(equals(chaine, "ACIER")){
+            return Element.ACIER;
+        }else if(equals(chaine, "COMBAT")){
+            return Element.COMBAT;
+        }else if(equals(chaine, "DRAGON")){
+            return Element.DRAGON;
+        }else if(equals(chaine, "EAU")){
+            return Element.EAU;
+        }else if(equals(chaine, "ELECTRQUE")){
+            return Element.ELECTRIQUE;
+        }else if(equals(chaine, "FEE")){
+            return Element.FEE;
+        }else if(equals(chaine, "FEU")){
+            return Element.FEU;
+        }else if(equals(chaine, "GLACE")){
+            return Element.GLACE;
+        }else if(equals(chaine, "INSECTE")){
+            return Element.INSECTE;
+        }else if(equals(chaine, "PLANTE")){
+            return Element.PLANTE;
+        }else if(equals(chaine, "POISON")){
+            return Element.POISON;
+        }else if(equals(chaine, "PSY")){
+            return Element.PSY;
+        }else if(equals(chaine, "ROCHE")){
+            return Element.ROCHE;
+        }else if(equals(chaine, "SOL")){
+            return Element.SOL;
+        }else if(equals(chaine, "SPECTRE")){
+            return Element.SPECTRE;
+        }else if(equals(chaine, "TENEBRE")){
+            return Element.TENEBRE;
+        }else if(equals(chaine, "VOL")){
+            return Element.VOL;
+        }else{
+            return Element.NORMAL;
+        } 
+    }
     String[] getMove(CSVFile listMoves, String name) {
+        println("banane");
         for(int idx = 1; idx < rowCount(listMoves); idx++) {
             if (equals(getCell(listMoves, idx, 0), name)) {
                 String[] move = new String[columnCount(listMoves, idx)];
@@ -75,10 +124,16 @@ class Pokemath extends Program{
         return new String[columnCount(listMoves)];
     }
 
+    Move getMove(String name) {
+        println("patate");
+        String [] listeMoves = getMove(loadListMoves(), name);
+        return newMove(listeMoves[0], Element.FEU, toInt(listeMoves[2]), Categorie.SPECIALE, listeMoves[8]);
+    }
+
     //si le type de l'attaque est le même que le type du pokemon, le bonus est de 1.5
 
     double isStaab(Move move, Pokemon pokemon){
-        double staab = 1;
+        double staab = 1.0;
         if(move.element == pokemon.type1 || move.element == pokemon.type2){
             staab = 1.5 ;
         }
@@ -186,17 +241,9 @@ class Pokemath extends Program{
         println("Vous avez choisi le niveau " + choixniveau + " : " + liste[choixniveau - 1]);
         return choixniveau - 1;
     }
-
-    // Fonction qui vide l'écran
-    void clearScreen2(){ // Le nom n'est pas valide apparement
-        for(int i = 0;i<100;i++){
-            println();
-        }
-    } 
-    
     // Algo Principale
-    void algorithm(){
-        clearScreen2();
+    void _algorithm(){
+        clearScreen();
         println("Bienvenue sur PokeMath !");
         println();
         CSVFile ListePokemon = loadCSV("ListePokemon.csv");
@@ -219,6 +266,11 @@ class Pokemath extends Program{
     }
 
     void testToInt() {
-        assertEquals(123, ToInt("123"));
+        assertEquals(123, toInt("123"));
     }
+/*
+    void testGetMove2() {
+        println(toString(getMove("Charge")));
+    }
+    */
 }
