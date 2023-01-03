@@ -1,11 +1,9 @@
 import extensions.CSVFile;
 import extensions.File;
 class Pokemath extends Program{
-    // int formuleDegats =  (((((((poke.niveau × 2 ÷ 5) + 2) × move.power × Att[Spé] ÷ 50) ÷ Def[Spé]) × Mod1) + 2) × CC × Mod2 × R ÷ 100) × STAB × Type1 × Type2 × Mod3;
-    // Fonction pour créer un nouveau pokemon selon les stats données
 
     ////////////////////////////////////////////////////////////////////////////////
-    //                        FONCTIONS DE CRÉATION DE CLASSES                    //
+    //                        FONCTIONS DE CRÉATION DE CLASSES / TYPES            //
     ////////////////////////////////////////////////////////////////////////////////
 
     Pokemon newPokemon(String name, int niveau, int pv,int attack,int attackSpe,int defense,int defenseSpe,int vitesse,Element type1,Element type2,Move[] attaques){
@@ -65,7 +63,7 @@ class Pokemath extends Program{
     }
  
     ////////////////////////////////////////////////////////////////////////////////
-    //                        FONCTIONS DE CHANGEMENT DE TYPE                     //
+    //                        FONCTIONS DE CONVERTION DE TYPE                     //
     ////////////////////////////////////////////////////////////////////////////////
     
     // Foncton qui convertit une chaine contenat un nombre en un entier
@@ -90,6 +88,12 @@ class Pokemath extends Program{
         }else{
             return Categorie.STATUT;
         }
+    }
+    
+    void teststringToElement(){
+        assertEquals(Element.ACIER,stringToElement("ACIER"));
+        assertEquals(Element.NORMAL,stringToElement("NORMAL"));
+        assertEquals(Element.FEE,stringToElement("FEE"));
     }
 
         Element stringToElement(String chaine){
@@ -176,11 +180,7 @@ class Pokemath extends Program{
     CSVFile loadListMoves() {
         return loadCSV("../ressources/ListeAttaques.csv", ';');
     }
-    void teststringToElement(){
-        assertEquals(Element.ACIER,stringToElement("ACIER"));
-        assertEquals(Element.NORMAL,stringToElement("NORMAL"));
-        assertEquals(Element.FEE,stringToElement("FEE"));
-    }
+    
 
 
 
