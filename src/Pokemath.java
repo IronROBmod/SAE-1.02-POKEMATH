@@ -301,7 +301,59 @@ class Pokemath extends Program{
         println("Vous avez choisi le niveau " + choixniveau + " : " + liste[choixniveau - 1]);
         return choixniveau - 1;
     }
-    
+     void CouleurType(Element element){
+        if(element == Element.FEU){
+            setColor(Color.RED);
+        }
+        if(element == Element.EAU){
+            setColor(Color.BLUE);
+        }
+        if(element == Element.ELECTRIQUE){
+            setColor(Color.YELLOW);
+        }
+        if(element == Element.PLANTE){
+            setColor(Color.GREEN);
+        }
+        if(element == Element.NORMAL){
+            setColor(Color.GRAY);
+        }
+        if(element == Element.VOL){
+            setColor(Color.LIGHT_BLUE);
+        }
+        if(element == Element.TENEBRE){
+            setColor(Color.BROWN);
+        }
+        if(element == Element.PSY){
+            setColor(Color.LIGHT_PINK);
+        }
+        if(element == Element.COMBAT){
+            setColor(Color.DARK_RED);
+        }
+        if(element == Element.SOL){
+            setColor(Color.LIGHT_BROWN);
+        }
+        if(element == Element.ROCHE){
+            setColor(Color.GRAY);
+        }
+        if(element == Element.GLACE){
+            setColor(Color.CYAN);
+        }
+        if(element == Element.POISON){
+            setColor(Color.MAGENTA);
+        }
+        if(element == Element.INSECTE){
+            setColor(Color.LIGHT_GRAY);
+        }
+        if(element == Element.DRAGON){
+            setColor(Color.DARK_blue);
+        }
+        if(element == Element.SPECTRE){
+            setColor(Color.LIGHT_GRAY);
+        }
+        if(element == Element.ACIER){
+            setColor(Color.STEEL);
+        }
+     }
     // Algo Principale
     void algorithm(){
         clearScreen();
@@ -312,7 +364,7 @@ class Pokemath extends Program{
         println("Bienvenue sur PokeMath !");
         println();
         CSVFile ListePokemon = loadCSV("../ressources/ListePokemon.csv");
-       //println(getCell(ListePokemon,1,0)); permet de recup les info dun pokemon
+        //println(getCell(ListePokemon,1,0)); //permet de recup les info dun pokemon
         jouerNiveau(choisirNiveau());
         
     }
