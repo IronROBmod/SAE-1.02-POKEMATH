@@ -258,7 +258,7 @@ class Pokemath extends Program{
         return true;
     }
 
-    // Fonction qui calcule le nombre de pv restant après une attaque
+   /* // Fonction qui calcule le nombre de pv restant après une attaque
     int pvRestantApresAttaque(Pokemon pokemon, Move attaqueUtilise) {
         int pvRestant = pokemon.pv - attaqueUtilise.power;
         if (pvRestant < 0) {
@@ -275,16 +275,19 @@ class Pokemath extends Program{
             return true;
         }
         return false;
-    }
+    }*/
     // Fonction qui joue un niveau
-    void jouerNiveau(int numNiveau) {
+    boolean jouerNiveau(int numNiveau) {
+        boolean res = false;
         Move move = newMove("Tacle", 30);
         Pokemon pokemon = newPokemon("Dracaufeu", 45, 160,50,50,50,50,50,Element.FEU,Element.FEU,new Move[]{move});
         if (poserQuestionCombienDePvRestant(pokemon, move)) {
             println("Bravo ! La réponse était bien " + pvRestantApresAttaque(pokemon, move) + " pv");
+            res = true;
         } else {
-            println("Perdu :( La réponse était " + pvRestantApresAttaque(pokemon, move) + " pv");
+            println("Perdu :(");
         }
+        return res;
     }
     // Fonction qui demande au joueur de choisir un niveau
     int choisirNiveau(){
@@ -301,7 +304,7 @@ class Pokemath extends Program{
         println("Vous avez choisi le niveau " + choixniveau + " : " + liste[choixniveau - 1]);
         return choixniveau - 1;
     }
-     void CouleurType(Element element){
+     /*void CouleurType(Element element){
         if(element == Element.FEU){
             setColor(Color.RED);
         }
@@ -353,7 +356,7 @@ class Pokemath extends Program{
         if(element == Element.ACIER){
             setColor(Color.STEEL);
         }
-     }
+     }*/
     // Algo Principale
     void algorithm(){
         clearScreen();
@@ -365,7 +368,21 @@ class Pokemath extends Program{
         println();
         CSVFile ListePokemon = loadCSV("../ressources/ListePokemon.csv");
         //println(getCell(ListePokemon,1,0)); //permet de recup les info dun pokemon
-        jouerNiveau(choisirNiveau());
+        String stopjeu =  "";
+        while(!equals(stopjeu,"n")){
+            int num = choisirNiveau();
+            boolean niveau =jouerNiveau(num);
+            int nbtour  = 3;
+            while(niveau == false && nbtour != 0){
+                println("il vous reste " + nbtour  + " essaies");
+                niveau = jouerNiveau(num);
+                nbtour= nbtour -1;
+            }
+            print("Veut-tu continuer ? (y/n)");
+            println();
+            stopjeu = readString();
+        }
+        
         
     }
 
