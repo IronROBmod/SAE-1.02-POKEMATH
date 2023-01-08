@@ -139,10 +139,12 @@ class Pokemath extends Program{
     // Algo Principale
     void algorithm(){
         clearScreen();
-        /*File test = newFile("../ressources/title.txt");
+        println();
+        File test = newFile("../ressources/title.txt");
          while (ready(test)){
             println(readLine(test));
-        }*/
+        }
+        println();
         println("Bienvenue sur PokeMath !");
         println();
 
