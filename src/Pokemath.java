@@ -2,6 +2,11 @@ import extensions.CSVFile;
 import extensions.File;
 class Pokemath extends Program{
 
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //                           FONCTIONS DE CLASSES                             //
+    ////////////////////////////////////////////////////////////////////////////////
+
     Pokemon newPokemon(String name, int niveau, int pv, int vitesse, Element type1, Move attaque){
         Pokemon poke = new Pokemon();
         poke.name = name;
@@ -13,21 +18,6 @@ class Pokemath extends Program{
         return poke;
     }
 
-    String toString(Pokemon poke){
-        return "[Nom: " + poke.name + ", Niveau: " + poke.niveau + ", PV: " + poke.pv + "]";
-    }
-    void testToString(){
-        assertEquals("[Nom: bulbizarre, Niveau: 10, PV: 45]", toString(newPokemon("bulbizarre", 10, 45, 1, Element.PLANTE, newMove("tranche herbe", Element.PLANTE, 5))));
-        assertEquals("[Nom: salameche, Niveau: 10, PV: 45]", toString(newPokemon("salameche", 10, 45, 1, Element.FEU, newMove("lance flamme", Element.FEU, 8))));
-        assertEquals("[Nom: carapuce, Niveau: 10, PV: 45]", toString(newPokemon("carapuce", 10, 45, 1, Element.EAU, newMove("pistolet a eau", Element.EAU, 6))));
-    }
-    void testToStringMove(){
-        assertEquals("tranche herbe qui fait 5 de degats.", toString(newMove("tranche herbe", Element.PLANTE, 5)));
-        assertEquals("lance flamme qui fait 8 de degats.", toString(newMove("lance flamme", Element.FEU, 8)));
-        assertEquals("pistolet a eau qui fait 6 de degats.", toString(newMove("pistolet a eau", Element.EAU, 6)));
-    }
-
-
     Move newMove(String name, Element element, int power){
         Move move = new Move();
         move.name = name;
@@ -36,15 +26,34 @@ class Pokemath extends Program{
         return move;
     }
 
+    String toString(Pokemon poke){
+        return "[Nom: " + poke.name + ", Niveau: " + poke.niveau + ", PV: " + poke.pv + "]";
+    }
+
+    void testToStringPokemon(){
+        assertEquals("[Nom: bulbizarre, Niveau: 10, PV: 45]", toString(newPokemon("bulbizarre", 10, 45, 1, Element.PLANTE, newMove("tranche herbe", Element.PLANTE, 5))));
+        assertEquals("[Nom: salameche, Niveau: 10, PV: 45]", toString(newPokemon("salameche", 10, 45, 1, Element.FEU, newMove("lance flamme", Element.FEU, 8))));
+        assertEquals("[Nom: carapuce, Niveau: 10, PV: 45]", toString(newPokemon("carapuce", 10, 45, 1, Element.EAU, newMove("pistolet a eau", Element.EAU, 6))));
+    }
+
     String toString(Move move){
         return move.name + " qui fait " + move.power + " de degats.";
     }
 
+    void testToStringMove(){
+        assertEquals("tranche herbe qui fait 5 de degats.", toString(newMove("tranche herbe", Element.PLANTE, 5)));
+        assertEquals("lance flamme qui fait 8 de degats.", toString(newMove("lance flamme", Element.FEU, 8)));
+        assertEquals("pistolet a eau qui fait 6 de degats.", toString(newMove("pistolet a eau", Element.EAU, 6)));
+    }
+
+
+ 
+    
     ////////////////////////////////////////////////////////////////////////////////
-    //                        FONCTIONS DE CONVERTION DE TYPE                     //
+    //                      FONCTIONS DE CONVERTION DE TYPE                       //
     ////////////////////////////////////////////////////////////////////////////////
     
-    // Foncton qui convertit une chaine contenat un nombre en un entier
+    // Fonction qui convertit une chaine contenant un nombre en un entier
     int toInt(String str) {
         int idx = length(str) - 1;
         int multi = 1;
@@ -57,6 +66,11 @@ class Pokemath extends Program{
         return sum;
     }
 
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //                             FONCTIONS DE JEU                               //
+    ////////////////////////////////////////////////////////////////////////////////
     void testniveau(){
     }
     // Fonction qui joue un niveau
@@ -151,6 +165,12 @@ class Pokemath extends Program{
         }
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //                              FONCTIONS DE MENU                             //
+    ////////////////////////////////////////////////////////////////////////////////
+
+
     // Fonction qui demande au joueur de choisir un niveau
     int choisirNiveau(int idxJoueur){
         CSVFile listeNiveau = loadCSV("../ressources/Niveau.csv", ',');
@@ -242,7 +262,10 @@ class Pokemath extends Program{
         return idxJoueur;
     }
 
-    // Algo Principale
+    ////////////////////////////////////////////////////////////////////////////////
+    //                              ALGO PRINCIPAL                                //
+    ////////////////////////////////////////////////////////////////////////////////
+
     void algorithm(){
         clearScreen();
         println();
