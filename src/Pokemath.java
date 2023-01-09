@@ -2,6 +2,44 @@ import extensions.CSVFile;
 import extensions.File;
 class Pokemath extends Program{
 
+    Pokemon newPokemon(String name, int niveau, int pv, int vitesse, Element type1, Move attaque){
+        Pokemon poke = new Pokemon();
+        poke.name  =name;
+        poke.niveau = niveau;
+        poke.pv = pv;
+        poke.vitesse =vitesse;
+        poke.type1 =type1;
+        poke.attaque = attaque;
+        return poke;
+    }
+
+    String toString(Pokemon poke){
+        return "[Nom: " + poke.name + ", Niveau: " + poke.niveau + ", PV: " + poke.pv + "]";
+    }
+    void testToString(){
+        assertEquals("[Nom: bulbizarre, Niveau: 10, PV: 45]", toString(newPokemon("bulbizarre", 10, 45, 1, Element.PLANTE, newMove("tranche herbe", Element.PLANTE, 5))));
+        assertEquals("[Nom: salameche, Niveau: 10, PV: 45]", toString(newPokemon("salameche", 10, 45, 1, Element.FEU, newMove("lance flamme", Element.FEU, 8))));
+        assertEquals("[Nom: carapuce, Niveau: 10, PV: 45]", toString(newPokemon("carapuce", 10, 45, 1, Element.EAU, newMove("pistolet a eau", Element.EAU, 6))));
+    }
+    void testToStringMove(){
+        assertEquals("tranche herbe qui fait 5 de degats.", toString(newMove("tranche herbe", Element.PLANTE, 5)));
+        assertEquals("lance flamme qui fait 8 de degats.", toString(newMove("lance flamme", Element.FEU, 8)));
+        assertEquals("pistolet a eau qui fait 6 de degats.", toString(newMove("pistolet a eau", Element.EAU, 6)));
+    }
+
+
+    Move newMove(String name, Element element, int power){
+        Move move = new Move();
+        move.name = name;
+        move.element = element;
+        move.power = power;
+        return move;
+    }
+
+    String toString(Move move){
+        return move.name + " qui fait " + move.power + " de degats.";
+    }
+
     ////////////////////////////////////////////////////////////////////////////////
     //                        FONCTIONS DE CONVERTION DE TYPE                     //
     ////////////////////////////////////////////////////////////////////////////////
@@ -25,11 +63,11 @@ class Pokemath extends Program{
         boolean res = false;
         int bonneReponse = 0;
         if(numNiveau==1){
-            println("Le pokemon " + adverse.name + " a " + adverse.pv + " points de vies. Si " + joueur.name + " attaque avec " + joueur.attaque);
+            println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre" + joueur.name + " attaque avec " + joueur.attaque);
             println("Combien reste t'il de points de vies a " + adverse.name +" ?");   
             bonneReponse = adverse.pv-joueur.attaque.power;
         }else if(numNiveau==2){
-            println("Le pokemon " + adverse.name + " a " + adverse.pv + " points de vies. Si " + joueur.name + " attaque avec " + joueur.attaque);
+            println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque);
             println("Il faut attaquer combien de fois " + adverse.name +" avec " + joueur.attaque.name + " pour qu'il soit KO ?");   
             int pv = adverse.pv;
             while(pv>0){
@@ -43,6 +81,13 @@ class Pokemath extends Program{
             println("Le pokemon " + joueur.name + " tiens comme objet les restes qui permet de le soigner de "+ aleaSoin +" pv " );
             println("Sachant qu'il possede " + joueur.pv +" pv et qu'il a  perdu pendant le combat "+ pvPerdu+ " pv, a combien de pv " + joueur.name + " sera t'il ?");
             bonneReponse = joueur.pv - pvPerdu + aleaSoin;
+        }else if(numNiveau==4){
+            int aleaPourCent = (int) (random()*100) + 1;
+            int aleaAttaque = (int) random()*3 + 1;
+            int pvPerdu = adverse.attaque.power * aleaAttaque;
+            println("Le pokemon " + joueur.name + " à "+ joueur.pv +" pv " );
+            println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque + " , à combien DE POURCENTAGE de vie est t'il ?");
+            bonneReponse = pvPerdu*100/joueur.pv;
         }
 
         int reponseJoueur = readInt();
@@ -71,15 +116,15 @@ class Pokemath extends Program{
     }
 
     void jouerNiveau(){
-        Move tranchHerbe = new Move("tranche herbe", Element.PLANTE, 5);
-        Move lanceFlamme = new Move("lance flamme", Element.FEU, 8);
-        Move pistoletEau = new Move("pistolet a eau", Element.EAU, 10);
+        Move tranchHerbe = newMove("tranche herbe", Element.PLANTE, 5);
+        Move lanceFlamme = newMove("lance flamme", Element.FEU, 8);
+        Move pistoletEau = newMove("pistolet a eau", Element.EAU, 10);
 
-        Pokemon bulbizarre = new Pokemon("bulbizarre", 10, 45, 1, Element.PLANTE, tranchHerbe);
-        Pokemon salameche = new Pokemon("salameche", 10, 40, 3, Element.FEU, lanceFlamme);
-        Pokemon carapuce = new Pokemon("carapuce", 10, 50, 2, Element.EAU, pistoletEau);
+        Pokemon bulbizarre = newPokemon("bulbizarre", 10, 45, 1, Element.PLANTE, tranchHerbe);
+        Pokemon salameche = newPokemon("salameche", 10, 40, 3, Element.FEU, lanceFlamme);
+        Pokemon carapuce = newPokemon("carapuce", 10, 50, 2, Element.EAU, pistoletEau);
 
-        Pokemon [] tableauPokemon = new Pokemon[]{bulbizarre, salameche, carapuce};
+        Pokemon[] tableauPokemon = new Pokemon[]{bulbizarre, salameche, carapuce};
 
         int numNiveau = choisirNiveau();
 
@@ -140,9 +185,9 @@ class Pokemath extends Program{
     void algorithm(){
         clearScreen();
         println();
-        File test = newFile("../ressources/title.txt");
-         while (ready(test)){
-            println(readLine(test));
+        File titre = newFile("../ressources/title.txt");
+         while (ready(titre)){
+            println(readLine(titre));
         }
         println();
         println("Bienvenue sur PokeMath !");
