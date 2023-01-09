@@ -63,11 +63,11 @@ class Pokemath extends Program{
         boolean res = false;
         int bonneReponse = 0;
         if(numNiveau==1){
-            println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre" + joueur.name + " attaque avec " + joueur.attaque);
+            println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre" + joueur.name + " attaque avec " + joueur.attaque.name);
             println("Combien reste t'il de points de vies a " + adverse.name +" ?");   
             bonneReponse = adverse.pv-joueur.attaque.power;
         }else if(numNiveau==2){
-            println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque);
+            println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name);
             println("Il faut attaquer combien de fois " + adverse.name +" avec " + joueur.attaque.name + " pour qu'il soit KO ?");   
             int pv = adverse.pv;
             while(pv>0){
@@ -86,7 +86,7 @@ class Pokemath extends Program{
             int aleaAttaque = (int) random()*3 + 1;
             int pvPerdu = adverse.attaque.power * aleaAttaque;
             println("Le pokemon " + joueur.name + " à "+ joueur.pv +" pv " );
-            println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque + " , à combien DE POURCENTAGE de vie est t'il ?");
+            println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque.name + " , à combien DE POURCENTAGE de vie est t'il ?");
             bonneReponse = pvPerdu*100/joueur.pv;
         }
 
