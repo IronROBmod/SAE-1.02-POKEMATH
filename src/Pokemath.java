@@ -57,11 +57,14 @@ class Pokemath extends Program{
         }
         return sum;
     }
-
+    void testniveau(){
+        
+    }
     // Fonction qui joue un niveau
     boolean niveau(int numNiveau, Pokemon joueur, Pokemon adverse) {
         boolean res = false;
         int bonneReponse = 0;
+        while(numNiveau==1 || numNiveau==2 || numNiveau==3 || numNiveau==4 || numNiveau==5){
         if(numNiveau==1){
             println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre" + joueur.name + " attaque avec " + joueur.attaque.name);
             println("Combien reste t'il de points de vies a " + adverse.name +" ?");   
@@ -88,6 +91,14 @@ class Pokemath extends Program{
             println("Le pokemon " + joueur.name + " à "+ joueur.pv +" pv " );
             println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque.name + " , à combien DE POURCENTAGE de vie est t'il ?");
             bonneReponse = pvPerdu*100/joueur.pv;
+        }else if(numNiveau==5){
+            int aleaPourCent = (int) (random()*100) + 1;
+            int aleaAttaque = (int) random()*3 + 1;
+            int pvPerdu = adverse.attaque.power * aleaAttaque;
+            println("Le pokemon " + joueur.name + " à "+ joueur.pv +" pv " );
+            println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque.name + " , à combien DE POURCENTAGE de vie est t'il ?");
+            bonneReponse = pvPerdu*100/joueur.pv;
+        }
         }
 
         int reponseJoueur = readInt();
@@ -166,19 +177,22 @@ class Pokemath extends Program{
         }
         println();
         boolean choisiNiveauDispo = true;
-        int choixniveau = 0;
-        while(choisiNiveauDispo){
+        int choixNiveau = 0;
+        while(choisiNiveauDispo && (choixNiveau < 1 || choixNiveau > nbLigne)){
             print("Saisissez le niveau que vous voulez lancer : ");
-            choixniveau = readInt();
+            choixNiveau = readInt();
             println();
-            println("Vous avez choisi le niveau " + choixniveau);
-            if(equals(getCell(listeNiveau, choixniveau-1, 2),"true")){
+            println("Vous avez choisi le niveau " + choixNiveau);
+            if(choixNiveau < 1 || choixNiveau > nbLigne){
+                println("Ce niveau n'existe pas.");
+            }
+            if(equals(getCell(listeNiveau, choixNiveau-1, 2),"true")){
                 choisiNiveauDispo = false;
             }else{
                 println("Mais il n'est pas disponible.");
             }
         }
-        return choixniveau;
+        return choixNiveau;
     }
      
     // Algo Principale
