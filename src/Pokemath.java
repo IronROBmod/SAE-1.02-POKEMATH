@@ -73,6 +73,46 @@ class Pokemath extends Program{
     }
 
 
+    ////////////////////////////////////////////////////////////////////////////////
+    //                            LECTURE_FICHIERS_CSV                            //
+    ////////////////////////////////////////////////////////////////////////////////
+
+    
+    // Renvoie le numéro de ligne d'une chaine dans la première colonne
+    int getNumLigne(CSVFile fichier, String chaine) {
+        for(int numLigne = 1; numLigne < rowCount(fichier); numLigne++) {
+            if (equals(getCell(fichier, numLigne, 0), chaine)) {
+                return numLigne;
+            }
+        }
+        return -1;
+    }
+
+    void testGetNumLigne() {
+        assertEquals(1, getNumLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), "Triplattaque"));
+        assertEquals(617, getNumLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), "Lumière du Néant"));
+        assertEquals(1, getNumLigne(loadCSV(CHEMIN_LISTE_POKEMONS), "Pikachu"));
+        assertEquals(5, getNumLigne(loadCSV(CHEMIN_LISTE_POKEMONS), "Deusolourdo"));
+    }
+
+    // Retourne une ligne donnée dans un fichier
+    String[] getLigne(CSVFile fichier, int numLigne) {
+        String[] ligne = new String[columnCount(fichier)];
+        for (int numColonne = 0; numColonne < columnCount(fichier); numColonne++) {
+            ligne[numColonne] = getCell(fichier, numLigne, numColonne);
+        }
+        return ligne;
+    }
+
+    void testGetLigne() {
+        assertArrayEquals(new String[]{"Triplattaque", "Tri Attack", "80", "NORMAL"}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 1));
+        assertArrayEquals(new String[]{"Lumière du Néant", "Light of Ruin", "140", "FEE"}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 617));
+        assertArrayEquals(new String[]{"Pikachu","100","211","146","116","136","136","216","ELECTRIC","","MOVE1","MOVE2","MOVE3","MOVE4"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 1));
+        assertArrayEquals(new String[]{"Deusolourdo", "100", "391", "236", "196","206","186","146","NORMAL","","MOVE1","MOVE2","MOVE3","MOVE4"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 5));
+    }
+
+
+
 
     ////////////////////////////////////////////////////////////////////////////////
     //                             FONCTIONS DE JEU                               //
@@ -285,8 +325,6 @@ class Pokemath extends Program{
         println("Bienvenue sur PokeMath !");
         println();
 
-        CSVFile ListePokemon = loadCSV(CHEMIN_LISTE_POKEMONS);
-        //println(getCell(ListePokemon,1,0)); //permet de recup les info dun pokemon
         String stopjeu =  "";
         
         int idxJoueur = demandeJoueur();
