@@ -3,6 +3,12 @@ import extensions.File;
 class Pokemath extends Program{
 
 
+    final String CHEMIN_SAUVEGARDE = "../ressources/Joueur.csv";
+    final String CHEMIN_LISTE_ATTAQUES = "../ressources/ListeAttaques.csv";
+    final String CHEMIN_LISTE_POKEMONS = "../ressources/ListePokemon.csv";
+    final String CHEMIN_LISTE_NIVEAU = "../ressources/Niveau.csv";
+
+
     ////////////////////////////////////////////////////////////////////////////////
     //                           FONCTIONS DE CLASSES                             //
     ////////////////////////////////////////////////////////////////////////////////
@@ -71,8 +77,8 @@ class Pokemath extends Program{
     ////////////////////////////////////////////////////////////////////////////////
     //                             FONCTIONS DE JEU                               //
     ////////////////////////////////////////////////////////////////////////////////
-    void testniveau(){
-    }
+
+
     // Fonction qui joue un niveau
     boolean niveau(int numNiveau, Pokemon joueur, Pokemon adverse, int idxJoueur) {
         boolean res = false;
@@ -116,7 +122,7 @@ class Pokemath extends Program{
         if (bonneReponse == reponseJoueur) {
             println("Bravo ! La reponse etait bien de " + bonneReponse + ".");
             res = true;
-            CSVFile listeJoueur = loadCSV("../ressources/Joueur.csv", ',');
+            CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
             int nbLigneJoueur = rowCount(listeJoueur);
             int nbColonneJoueur = columnCount(listeJoueur);
             String [][] csv = new String[nbLigneJoueur][nbColonneJoueur];
@@ -129,7 +135,7 @@ class Pokemath extends Program{
                     }
                 }
             }
-            saveCSV(csv, "../ressources/Joueur.csv");
+            saveCSV(csv, CHEMIN_SAUVEGARDE);
             println("Le niveau " + (numNiveau+1) + " est DISPONIBLE !!!");
         } else {
             println("Perdu :( " + joueur.name + " est K.O.");
@@ -173,10 +179,10 @@ class Pokemath extends Program{
 
     // Fonction qui demande au joueur de choisir un niveau
     int choisirNiveau(int idxJoueur){
-        CSVFile listeNiveau = loadCSV("../ressources/Niveau.csv", ',');
+        CSVFile listeNiveau = loadCSV(CHEMIN_LISTE_NIVEAU, ',');
         int nbLigneNiveau = rowCount(listeNiveau);
         int nbColonneNiveau = columnCount(listeNiveau);
-        CSVFile listeJoueur = loadCSV("../ressources/Joueur.csv", ',');
+        CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
         int nbLigneJoueur = rowCount(listeJoueur);
         int nbColonneJoueur = columnCount(listeJoueur);
 
@@ -213,9 +219,10 @@ class Pokemath extends Program{
         }
         return choixNiveau;
     }
-     
+    
+    //Crée un nouveau joueur
     void creerJoueur(String nomJoueur){
-        CSVFile listeJoueur = loadCSV("../ressources/Joueur.csv", ',');
+        CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
         int nbLigneJoueur = rowCount(listeJoueur);
         int nbColonneJoueur = columnCount(listeJoueur);
         String [][] csv = new String[nbLigneJoueur+1][nbColonneJoueur];
@@ -236,15 +243,16 @@ class Pokemath extends Program{
                 csv[nbLigneJoueur][col]= "false";
             }
         }
-        saveCSV(csv, "../ressources/Joueur.csv");
+        saveCSV(csv, CHEMIN_SAUVEGARDE);
         print("Bienvenue " + nomJoueur + " tu es un nouveau joueur !!!");
     }
 
+    // Demande le nom du joueur
     int demandeJoueur(){
         boolean joueurInscrit = false;
         print("Veuillez inscrire votre nom : ");
         String nomJoueur = readString();
-        CSVFile listeJoueur = loadCSV("../ressources/Joueur.csv", ',');
+        CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
         int nbLigneJoueur = rowCount(listeJoueur);
         int nbColonneJoueur = columnCount(listeJoueur);
         int idxJoueur = 0;
@@ -277,7 +285,7 @@ class Pokemath extends Program{
         println("Bienvenue sur PokeMath !");
         println();
 
-        CSVFile ListePokemon = loadCSV("../ressources/ListePokemon.csv");
+        CSVFile ListePokemon = loadCSV(CHEMIN_LISTE_POKEMONS);
         //println(getCell(ListePokemon,1,0)); //permet de recup les info dun pokemon
         String stopjeu =  "";
         
