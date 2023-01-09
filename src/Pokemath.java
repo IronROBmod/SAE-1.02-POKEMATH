@@ -73,6 +73,52 @@ class Pokemath extends Program{
     }
 
 
+    Element toElement(String chaine){
+        if(equals(chaine, "ACIER")){
+            return Element.ACIER;
+        }else if(equals(chaine, "COMBAT")){
+            return Element.COMBAT;
+        }else if(equals(chaine, "DRAGON")){
+            return Element.DRAGON;
+        }else if(equals(chaine, "EAU")){
+            return Element.EAU;
+        }else if(equals(chaine, "ELECTRQUE")){
+            return Element.ELECTRIQUE;
+        }else if(equals(chaine, "FEE")){
+            return Element.FEE;
+        }else if(equals(chaine, "FEU")){
+            return Element.FEU;
+        }else if(equals(chaine, "GLACE")){
+            return Element.GLACE;
+        }else if(equals(chaine, "INSECTE")){
+            return Element.INSECTE;
+        }else if(equals(chaine, "PLANTE")){
+            return Element.PLANTE;
+        }else if(equals(chaine, "POISON")){
+            return Element.POISON;
+        }else if(equals(chaine, "PSY")){
+            return Element.PSY;
+        }else if(equals(chaine, "ROCHE")){
+            return Element.ROCHE;
+        }else if(equals(chaine, "SOL")){
+            return Element.SOL;
+        }else if(equals(chaine, "SPECTRE")){
+            return Element.SPECTRE;
+        }else if(equals(chaine, "TENEBRES")){
+            return Element.TENEBRES;
+        }else if(equals(chaine, "VOL")){
+            return Element.VOL;
+        }else{
+            return Element.NORMAL;
+        } 
+    }
+
+    void testToElement(){
+        assertEquals(Element.ACIER,toElement("ACIER"));
+        assertEquals(Element.NORMAL,toElement("NORMAL"));
+        assertEquals(Element.FEE,toElement("FEE"));
+    }
+
     ////////////////////////////////////////////////////////////////////////////////
     //                            LECTURE_FICHIERS_CSV                            //
     ////////////////////////////////////////////////////////////////////////////////
@@ -110,6 +156,27 @@ class Pokemath extends Program{
         assertArrayEquals(new String[]{"Pikachu","100","211","146","116","136","136","216","ELECTRIC","","MOVE1","MOVE2","MOVE3","MOVE4"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 1));
         assertArrayEquals(new String[]{"Deusolourdo", "100", "391", "236", "196","206","186","146","NORMAL","","MOVE1","MOVE2","MOVE3","MOVE4"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 5));
     }
+
+    Move loadAttaque(String nom) {
+        CSVFile listeAttaques = loadCSV(CHEMIN_LISTE_ATTAQUES, ';');
+        String[] stats = getLigne(listeAttaques, getNumLigne(listeAttaques, nom));
+        return newMove(stats[0], toElement(stats[3]), toInt(stats[2]));
+
+    }
+
+    void testLoadAttaque() {
+        Move attaque = loadAttaque("Triplattaque");
+        assertEquals("Triplattaque", attaque.name);
+        assertEquals(Element.NORMAL, attaque.element);
+        assertEquals(80, attaque.power);
+        Move attaque2 = loadAttaque("Larcin");
+        assertEquals("Larcin", attaque2.name);
+        assertEquals(Element.TENEBRES, attaque2.element);
+        assertEquals(60, attaque2.power);
+
+    }
+
+    
 
 
 
@@ -314,7 +381,7 @@ class Pokemath extends Program{
     //                              ALGO PRINCIPAL                                //
     ////////////////////////////////////////////////////////////////////////////////
 
-    void algorithm(){
+    void _algorithm(){
         clearScreen();
         println();
         File titre = newFile("../ressources/title.txt");
