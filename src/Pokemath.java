@@ -58,7 +58,6 @@ class Pokemath extends Program{
         return sum;
     }
     void testniveau(){
-        
     }
     // Fonction qui joue un niveau
     boolean niveau(int numNiveau, Pokemon joueur, Pokemon adverse) {
@@ -66,7 +65,7 @@ class Pokemath extends Program{
         int bonneReponse = 0;
         while(numNiveau==1 || numNiveau==2 || numNiveau==3 || numNiveau==4 || numNiveau==5){
         if(numNiveau==1){
-            println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre" + joueur.name + " attaque avec " + joueur.attaque.name);
+            println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name);
             println("Combien reste t'il de points de vies a " + adverse.name +" ?");   
             bonneReponse = adverse.pv-joueur.attaque.power;
         }else if(numNiveau==2){
