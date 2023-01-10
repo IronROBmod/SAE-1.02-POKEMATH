@@ -248,20 +248,21 @@ class Pokemath extends Program{
     // Affiche le combat
     void afficherCombat(Pokemon pokemonJoueur, Pokemon pokemonAdverse) {
         // Charge le dessin ascii des pokemons
-        String[] asciiPokemonAdverse = toTab(lireFichierTxt("../ressources/AsciiArt/" + pokemonAdverse.name + "_Face.txt"));
         String[] asciiPokemonJoueur = toTab(lireFichierTxt("../ressources/AsciiArt/" + pokemonJoueur.name + "_Face.txt"));
+        String[] asciiPokemonAdverse = toTab(lireFichierTxt("../ressources/AsciiArt/" + pokemonAdverse.name + "_Face.txt"));
 
         // Affiche le coté adverse
+        print("                      ");
+        print("Votre Pokemon : " + pokemonJoueur.name);
+        print("                                        ");
         println("Pokemon Adverse : " + pokemonAdverse.name);
         for(int idx = 0; idx < length(asciiPokemonAdverse); idx++) {
-            print("                                                                                   ");
+            print(asciiPokemonJoueur[idx]);
+            print(" ");
             println(asciiPokemonAdverse[idx]);
+            
         }
-        // Affiche le coté du joueur
-        println("Votre Pokemon : " + pokemonJoueur.name);
-        for(int idx = 0; idx < length(asciiPokemonJoueur); idx++) {
-            println(asciiPokemonJoueur[idx]);
-        }
+
     }
 
     int questionPvAdversesRestantApresAttaque(Pokemon joueur, Pokemon adverse){
