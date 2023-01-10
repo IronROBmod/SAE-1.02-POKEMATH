@@ -202,50 +202,57 @@ class Pokemath extends Program{
 
 
 
-
-
     ////////////////////////////////////////////////////////////////////////////////
     //                             FONCTIONS DE JEU                               //
     ////////////////////////////////////////////////////////////////////////////////
 
+    int questionPvAdversesRestantApresAttaque(Pokemon joueur, Pokemon adverse){
+        println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name + " qui fait " + joueur.attaque.power + " de degats.");
+        println("Combien reste t'il de points de vies a " + adverse.name +" ?");   
+        return adverse.pv-joueur.attaque.power;
+    }
 
+    int questionNombreAttaquesNecessairesPourKO(Pokemon joueur, Pokemon adverse) {
+        println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name + " qui fait " + joueur.attaque.power + " de degats.");
+            println("Il faut attaquer combien de fois " + adverse.name +" avec " + joueur.attaque.name + " pour qu'il soit KO ?");   
+            int pv = adverse.pv;
+            int bonneReponse = 0;
+            while(pv>0){
+                pv = pv-joueur.attaque.power;
+                bonneReponse++;    
+            }
+            return bonneReponse;
+    }
+
+    int questionPvJoueurRestantApresSoin(Pokemon joueur, Pokemon adverse) {
+        int aleaSoin = (int) (random()*10) + 1;
+        int aleaAttaque = (int) random()*3 + 1;
+        int pvPerdu = adverse.attaque.power * aleaAttaque;
+        println("Le pokemon " + joueur.name + " tiens comme objet les restes qui permet de le soigner de "+ aleaSoin +" pv " );
+        println("Sachant qu'il possede " + joueur.pv +" pv et qu'il a  perdu pendant le combat "+ pvPerdu+ " pv, a combien de pv " + joueur.name + " sera t'il ?");
+        return joueur.pv - pvPerdu + aleaSoin;
+    }
+
+    int questionPourcentageDeVieRestant(Pokemon joueur, Pokemon adverse) {
+        int aleaPourCent = (int) (random()*100) + 1;
+        int aleaAttaque = (int) random()*3 + 1;
+        int pvPerdu = adverse.attaque.power * aleaAttaque;
+        println("Le pokemon " + joueur.name + " à "+ joueur.pv +" pv " );
+        println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque.name + " , à combien DE POURCENTAGE de vie est t'il ?");
+        return pvPerdu*100/joueur.pv;
+    }
     // Fonction qui joue un niveau
     boolean niveau(int numNiveau, Pokemon joueur, Pokemon adverse, int idxJoueur) {
         boolean res = false;
         int bonneReponse = 0;
         if(numNiveau==1){
-            println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name + " qui fait " + joueur.attaque.power + " de degats.");
-            println("Combien reste t'il de points de vies a " + adverse.name +" ?");   
-            bonneReponse = adverse.pv-joueur.attaque.power;
+            bonneReponse = questionPvAdversesRestantApresAttaque(joueur, adverse);
         }else if(numNiveau==2){
-            println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name + " qui fait " + joueur.attaque.power + " de degats.");
-            println("Il faut attaquer combien de fois " + adverse.name +" avec " + joueur.attaque.name + " pour qu'il soit KO ?");   
-            int pv = adverse.pv;
-            while(pv>0){
-                pv = pv-joueur.attaque.power;
-                bonneReponse++;    
-            }
+            bonneReponse = questionNombreAttaquesNecessairesPourKO(joueur, adverse);
         }else if(numNiveau==3){
-            int aleaSoin = (int) (random()*10) + 1;
-            int aleaAttaque = (int) random()*3 + 1;
-            int pvPerdu = adverse.attaque.power * aleaAttaque;
-            println("Le pokemon " + joueur.name + " tiens comme objet les restes qui permet de le soigner de "+ aleaSoin +" pv " );
-            println("Sachant qu'il possede " + joueur.pv +" pv et qu'il a  perdu pendant le combat "+ pvPerdu+ " pv, a combien de pv " + joueur.name + " sera t'il ?");
-            bonneReponse = joueur.pv - pvPerdu + aleaSoin;
-        }else if(numNiveau==4){
-            int aleaPourCent = (int) (random()*100) + 1;
-            int aleaAttaque = (int) random()*3 + 1;
-            int pvPerdu = adverse.attaque.power * aleaAttaque;
-            println("Le pokemon " + joueur.name + " à "+ joueur.pv +" pv " );
-            println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque.name + " , à combien DE POURCENTAGE de vie est t'il ?");
-            bonneReponse = pvPerdu*100/joueur.pv;
-        }else if(numNiveau==5){
-            int aleaPourCent = (int) (random()*100) + 1;
-            int aleaAttaque = (int) random()*3 + 1;
-            int pvPerdu = adverse.attaque.power * aleaAttaque;
-            println("Le pokemon " + joueur.name + " à "+ joueur.pv +" pv " );
-            println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque.name + " , à combien DE POURCENTAGE de vie est t'il ?");
-            bonneReponse = pvPerdu*100/joueur.pv;
+            bonneReponse = questionPvJoueurRestantApresSoin(joueur, adverse);
+        }else if(numNiveau == 4 || numNiveau == 5){
+            bonneReponse = questionPourcentageDeVieRestant(joueur, adverse);
         }
 
         int reponseJoueur = readInt();
@@ -324,7 +331,7 @@ class Pokemath extends Program{
 
     // Fonction qui demande au joueur de choisir un niveau
     int choisirNiveau(int idxJoueur){
-        
+
         CSVFile listeNiveau = loadCSV(CHEMIN_LISTE_NIVEAU, ',');
         CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
 
@@ -333,7 +340,7 @@ class Pokemath extends Program{
         
         
         println();
-        boolean choisiNiveauDispo = false
+        boolean choisiNiveauDispo = false;
         int choixNiveau = 0;
         while(!choisiNiveauDispo){
             print("Saisissez le niveau que vous voulez lancer : ");
