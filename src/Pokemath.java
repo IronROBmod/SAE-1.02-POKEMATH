@@ -59,7 +59,7 @@ class Pokemath extends Program{
     //                      FONCTIONS DE CONVERTION DE TYPE                       //
     ////////////////////////////////////////////////////////////////////////////////
     
-    // Fonction qui convertit une chaine contenant un nombre en un entier
+    // Fonction qui convertit une chaine contenant un nombre en un entier ( permet de lire les stats dans les csv)
     int toInt(String str) {
         int idx = length(str) - 1;
         int multi = 1;
@@ -222,8 +222,6 @@ class Pokemath extends Program{
         }
     }
 
-
-
     int questionPvAdversesRestantApresAttaque(Pokemon joueur, Pokemon adverse){
         println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name + " qui fait " + joueur.attaque.power + " de degats.");
         println("Combien reste t'il de points de vies a " + adverse.name +" ?");
@@ -263,7 +261,9 @@ class Pokemath extends Program{
     boolean niveau(int numNiveau, Pokemon joueur, Pokemon adverse, int idxJoueur) {
         boolean res = false;
         int bonneReponse = 0;
-        if(numNiveau==1){
+        if(numNiveau==0){
+            infiniteMode();
+        }else if(numNiveau==1){
             bonneReponse = questionPvAdversesRestantApresAttaque(joueur, adverse);
         }else if(numNiveau==2){
             bonneReponse = questionNombreAttaquesNecessairesPourKO(joueur, adverse);
@@ -282,8 +282,8 @@ class Pokemath extends Program{
             int nbLigneJoueur = rowCount(listeJoueur);
             int nbColonneJoueur = columnCount(listeJoueur);
             String [][] csv = new String[nbLigneJoueur][nbColonneJoueur];
-            for(int lig = 0; lig < nbLigneJoueur; lig++) {
-                for(int col = 0; col < nbColonneJoueur; col++) {
+            for(int lig = 1; lig < nbLigneJoueur; lig++) {
+                for(int col = 1; col < nbColonneJoueur; col++) {
                     if(col==numNiveau+1 && lig==idxJoueur){
                         csv[lig][col]="true";
                     }else{
@@ -347,7 +347,7 @@ class Pokemath extends Program{
     void afficherListeNiveau(CSVFile listeNiveau, CSVFile listeJoueur, int idxJoueur) {
         println("Liste des niveaux disponibles :");
         println();
-        for(int idx = 1; idx < columnCount(listeJoueur); idx++) {
+        for(int idx = 1; idx <= columnCount(listeJoueur); idx++) {
             if(equals(getCell(listeJoueur, idxJoueur, idx),"true")){
                 println(getCell(listeNiveau, idx-1, 0));
             }
@@ -362,11 +362,11 @@ class Pokemath extends Program{
         }
     }
 
-    void adventureMode(){
+    void infiniteMode(){
         int choixMod = 0;
         CSVFile listeNiveau = loadCSV(CHEMIN_LISTE_NIVEAU, ',');
         int nbColonneNiveau = columnCount(listeNiveau);
-        for(int cpt = 1 ; cpt < nbColonneNiveau ; cpt++){
+        for(int cpt = 1 ; cpt <= nbColonneNiveau ; cpt++){
             if(choisirNiveau(choixMod) == 0 && cpt == nbColonneNiveau -1){
                 int aleaQuestion =(int) random()*cpt;
                 jouerNiveau(aleaQuestion);
@@ -396,13 +396,17 @@ class Pokemath extends Program{
             choixNiveau = readInt();
             println();
 
-            if(choixNiveau>rowCount(listeNiveau) || choixNiveau<=0){
+            if(choixNiveau>rowCount(listeNiveau) || choixNiveau<0){
                 println("Le niveau " + choixNiveau + " n'existe pas.");
 
             }else if(equals(getCell(listeJoueur, idxJoueur, choixNiveau),"true")){
                 println("Vous avez choisi le niveau " + choixNiveau);
                 choisiNiveauDispo = true;
 
+            }else if(choixNiveau == 0){
+                choisiNiveauDispo = true;
+                infiniteMode();
+                println("Vous avez choisi le mode infini");
             }else{
                 println("Le niveau " + choixNiveau + " n'est pas disponible.");
             }
@@ -474,7 +478,7 @@ class Pokemath extends Program{
         while(!equals(stopjeu,"n")){
             jouerNiveau(idxJoueur);
             if(idxJoueur == 0);
-            adventureMode();
+            infiniteMode();
             print("Veut-tu continuer ? (y/n)");
             println();
             stopjeu = readString();
