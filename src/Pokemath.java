@@ -347,7 +347,7 @@ class Pokemath extends Program{
     void afficherListeNiveau(CSVFile listeNiveau, CSVFile listeJoueur, int idxJoueur) {
         println("Liste des niveaux disponibles :");
         println();
-        for(int idx = 1; idx <= columnCount(listeJoueur); idx++) {
+        for(int idx = 1; idx < columnCount(listeJoueur); idx++) {
             if(equals(getCell(listeJoueur, idxJoueur, idx),"true")){
                 println(getCell(listeNiveau, idx-1, 0));
             }
@@ -477,8 +477,10 @@ class Pokemath extends Program{
 
         while(!equals(stopjeu,"n")){
             jouerNiveau(idxJoueur);
-            if(idxJoueur == 0);
+            println("bug avant");
+            if(idxJoueur == 0) {
             infiniteMode();
+            }
             print("Veut-tu continuer ? (y/n)");
             println();
             stopjeu = readString();
