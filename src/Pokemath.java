@@ -121,6 +121,35 @@ class Pokemath extends Program{
         assertEquals(Element.FEE,toElement("FEE"));
     }
 
+    // Converti une chaine en tableau de chaine avec une ligne par case
+    String[] toTab(String chaine) {
+        // Compte le nombre de retour à la ligne dans la chaine
+        int nbRetourLigne = 0;
+        for(int idxChaine = 0; idxChaine < length(chaine); idxChaine++) {
+            if(charAt(chaine, idxChaine) == '\n') {
+                nbRetourLigne++;
+            }
+        }
+        // Crée et initialise un tableau de chaines vide
+        String[] tab = new String[nbRetourLigne + 1];
+        for (int idx = 0; idx < length(tab); idx++) {
+            tab[idx] = "";
+        }
+
+        // Remplie le tableau avec la chaine
+        int idxTab = 0;
+        for(int idxChaine = 0; idxChaine < length(chaine); idxChaine++) {
+            // Si retour à la ligne, passe à la case suivante
+            if(charAt(chaine, idxChaine) == '\n') {
+                idxTab++;
+            // Sinon, ajoute le charactère à la chaine de la case actuelle
+            } else {
+                tab[idxTab] = tab[idxTab] + charAt(chaine, idxChaine);
+            }
+        }
+        return tab;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////
     //                            LECTURE DE FICHIERS                             //
     ////////////////////////////////////////////////////////////////////////////////
@@ -206,7 +235,7 @@ class Pokemath extends Program{
         while (ready(fichier)){
             chaine = chaine + readLine(fichier) + "\n";
         }
-        return chaine;
+        return substring(chaine, 0, length(chaine) -1);
     }
 
 
@@ -218,11 +247,21 @@ class Pokemath extends Program{
 
     // Affiche le combat
     void afficherCombat(Pokemon pokemonJoueur, Pokemon pokemonAdverse) {
-        
+        // Charge le dessin ascii des pokemons
+        String[] asciiPokemonAdverse = toTab(lireFichierTxt("../ressources/AsciiArt/" + pokemonAdverse.name + "_Face.txt"));
+        String[] asciiPokemonJoueur = toTab(lireFichierTxt("../ressources/AsciiArt/" + pokemonJoueur.name + "_Face.txt"));
+
+        // Affiche le coté adverse
         println("Pokemon Adverse : " + pokemonAdverse.name);
-        println(lireFichierTxt("../ressources/AsciiArt/" + pokemonAdverse.name + "_Face.txt"));
+        for(int idx = 0; idx < length(asciiPokemonAdverse); idx++) {
+            print("                                                                                   ");
+            println(asciiPokemonAdverse[idx]);
+        }
+        // Affiche le coté du joueur
         println("Votre Pokemon : " + pokemonJoueur.name);
-        println(lireFichierTxt("../ressources/AsciiArt/" + pokemonJoueur.name + "_Face.txt"));
+        for(int idx = 0; idx < length(asciiPokemonJoueur); idx++) {
+            println(asciiPokemonJoueur[idx]);
+        }
     }
 
     int questionPvAdversesRestantApresAttaque(Pokemon joueur, Pokemon adverse){
