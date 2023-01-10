@@ -135,8 +135,8 @@ class Pokemath extends Program{
     }
 
     void testGetNumLigne() {
-        assertEquals(1, getNumLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), "Triplattaque"));
-        assertEquals(617, getNumLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), "Lumière du Néant"));
+        assertEquals(2, getNumLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), "Triplattaque"));
+        assertEquals(618, getNumLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), "Lumière du Néant"));
         assertEquals(1, getNumLigne(loadCSV(CHEMIN_LISTE_POKEMONS), "Pikachu"));
         assertEquals(5, getNumLigne(loadCSV(CHEMIN_LISTE_POKEMONS), "Deusolourdo"));
     }
@@ -145,14 +145,17 @@ class Pokemath extends Program{
     String[] getLigne(CSVFile fichier, int numLigne) {
         String[] ligne = new String[columnCount(fichier)];
         for (int numColonne = 0; numColonne < columnCount(fichier); numColonne++) {
+            ligne[numColonne] = "";
+        }
+        for (int numColonne = 0; numColonne < columnCount(fichier, numLigne); numColonne++) {
             ligne[numColonne] = getCell(fichier, numLigne, numColonne);
         }
         return ligne;
     }
 
     void testGetLigne() {
-        assertArrayEquals(new String[]{"Triplattaque", "Tri Attack", "80", "NORMAL"}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 1));
-        assertArrayEquals(new String[]{"Lumière du Néant", "Light of Ruin", "140", "FEE"}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 617));
+        assertArrayEquals(new String[]{"Triplattaque","Tri Attack","80","100","0","10","NORMAL","SPECIAL","Le lanceur envoie trois boules d’énergie simultanément. Peut aussi paralyser, brûler ou geler l’ennemi."}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 2));
+        assertArrayEquals(new String[]{"Lumière du Néant","Light of Ruin","140","90","0","5","FEE","SPECIAL",""}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 618));
         assertArrayEquals(new String[]{"Pikachu","100","211","146","116","136","136","216","ELECTRIC","","MOVE1","MOVE2","MOVE3","MOVE4"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 1));
         assertArrayEquals(new String[]{"Deusolourdo", "100", "391", "236", "196","206","186","146","NORMAL","","MOVE1","MOVE2","MOVE3","MOVE4"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 5));
     }
@@ -160,7 +163,7 @@ class Pokemath extends Program{
     Move loadAttaque(String nom) {
         CSVFile listeAttaques = loadCSV(CHEMIN_LISTE_ATTAQUES, ';');
         String[] stats = getLigne(listeAttaques, getNumLigne(listeAttaques, nom));
-        return newMove(stats[0], toElement(stats[3]), toInt(stats[2]));
+        return newMove(stats[0], toElement(stats[6]), toInt(stats[2]));
 
     }
 
@@ -176,7 +179,7 @@ class Pokemath extends Program{
 
     }
 
-    
+
 
 
 
