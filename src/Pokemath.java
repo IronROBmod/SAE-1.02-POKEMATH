@@ -324,12 +324,9 @@ class Pokemath extends Program{
 
     // Fonction qui demande au joueur de choisir un niveau
     int choisirNiveau(int idxJoueur){
+        
         CSVFile listeNiveau = loadCSV(CHEMIN_LISTE_NIVEAU, ',');
-        int nbLigneNiveau = rowCount(listeNiveau);
-        int nbColonneNiveau = columnCount(listeNiveau);
         CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
-        int nbLigneJoueur = rowCount(listeJoueur);
-        int nbColonneJoueur = columnCount(listeJoueur);
 
         afficherListeNiveau(listeNiveau, listeJoueur, idxJoueur);
 
