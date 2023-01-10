@@ -274,20 +274,14 @@ class Pokemath extends Program{
     }
 
     void jouerNiveau(int idxJoueur){
-        Move tranchHerbe = newMove("tranche herbe", Element.PLANTE, 5);
-        Move lanceFlamme = newMove("lance flamme", Element.FEU, 8);
-        Move pistoletEau = newMove("pistolet a eau", Element.EAU, 10);
 
-        Pokemon bulbizarre = newPokemon("bulbizarre", 10, 45, 1, Element.PLANTE, tranchHerbe);
-        Pokemon salameche = newPokemon("salameche", 10, 40, 3, Element.FEU, lanceFlamme);
-        Pokemon carapuce = newPokemon("carapuce", 10, 50, 2, Element.EAU, pistoletEau);
-
-        Pokemon[] tableauPokemon = new Pokemon[]{bulbizarre, salameche, carapuce};
+        //Pokemon[] tableauPokemon = new Pokemon[]{bulbizarre, salameche, carapuce};
+        Pokemon[] tableauPokemon = new Pokemon[]{loadPokemon("Pikachu"), loadPokemon("Dracaufeu"), loadPokemon("Évoli"), loadPokemon("Rafflesia"), loadPokemon("Sablaireau")};
 
         int numNiveau = choisirNiveau(idxJoueur);
 
-        int aleaJoueur = (int) (random()*3);
-        int aleaAdverse = (int) (random()*3);
+        int aleaJoueur = (int) (random()*5);
+        int aleaAdverse = (int) (random()*5);
         while(aleaJoueur==aleaAdverse){
             aleaAdverse = (int) (random()*3);
         }
@@ -306,6 +300,27 @@ class Pokemath extends Program{
     //                              FONCTIONS DE MENU                             //
     ////////////////////////////////////////////////////////////////////////////////
 
+    // Fonction qui affiche la liste des niveaux
+    void afficherListeNiveau(CSVFile listeNiveau, CSVFile listeJoueur, int idxJoueur) {
+        println("Liste des niveaux disponibles :");
+        println();
+        for(int idx = 1; idx < columnCount(listeJoueur); idx++) {
+            if(equals(getCell(listeJoueur, idxJoueur, idx),"true")){
+                println(getCell(listeNiveau, idx-1, 0));
+            }
+        }
+        println();
+        println("Liste des niveaux bloque:");
+        println();
+        for(int idx = 1; idx < columnCount(listeJoueur); idx++) {
+            if(equals(getCell(listeJoueur, idxJoueur, idx),"false")){
+                println(getCell(listeNiveau, idx-1, 0));
+            }
+        }
+    }
+
+
+
 
     // Fonction qui demande au joueur de choisir un niveau
     int choisirNiveau(int idxJoueur){
@@ -316,35 +331,27 @@ class Pokemath extends Program{
         int nbLigneJoueur = rowCount(listeJoueur);
         int nbColonneJoueur = columnCount(listeJoueur);
 
-        println("Liste des niveaux disponibles :");
+        afficherListeNiveau(listeNiveau, listeJoueur, idxJoueur);
+
+        
+        
         println();
-        for(int idx = 1; idx < nbColonneJoueur; idx++) {
-            if(equals(getCell(listeJoueur, idxJoueur, idx),"true")){
-                println(getCell(listeNiveau, idx-1, 0));
-            }
-        }
-        println();
-        println("Liste des niveaux bloque:");
-        println();
-        for(int idx = 1; idx < nbColonneJoueur; idx++) {
-            if(equals(getCell(listeJoueur, idxJoueur, idx),"false")){
-                println(getCell(listeNiveau, idx-1, 0));
-            }
-        }
-        println();
-        boolean choisiNiveauDispo = true;
+        boolean choisiNiveauDispo = false
         int choixNiveau = 0;
-        while(choisiNiveauDispo){
+        while(!choisiNiveauDispo){
             print("Saisissez le niveau que vous voulez lancer : ");
             choixNiveau = readInt();
             println();
-            println("Vous avez choisi le niveau " + choixNiveau);
-            if(choixNiveau>nbLigneNiveau || choixNiveau<=0){
-                println("Mais il n'existe pas.");
+
+            if(choixNiveau>rowCount(listeNiveau) || choixNiveau<=0){
+                println("Le niveau " + choixNiveau + " n'existe pas.");
+
             }else if(equals(getCell(listeJoueur, idxJoueur, choixNiveau),"true")){
-                choisiNiveauDispo = false;
+                println("Vous avez choisi le niveau " + choixNiveau);
+                choisiNiveauDispo = true;
+
             }else{
-                println("Mais il n'est pas disponible.");
+                println("Le niveau " + choixNiveau + " n'est pas disponible.");
             }
         }
         return choixNiveau;
@@ -404,7 +411,7 @@ class Pokemath extends Program{
     //                              ALGO PRINCIPAL                                //
     ////////////////////////////////////////////////////////////////////////////////
 
-    void _algorithm(){
+    void algorithm(){
         clearScreen();
         println();
         File titre = newFile("../ressources/title.txt");
