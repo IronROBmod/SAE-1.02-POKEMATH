@@ -206,9 +206,27 @@ class Pokemath extends Program{
     //                             FONCTIONS DE JEU                               //
     ////////////////////////////////////////////////////////////////////////////////
 
+    // Affiche le combat
+    void afficherCombat(Pokemon pokemonJoueur, Pokemon pokemonAdverse) {
+        
+        println("Pokemon Adverse : " + pokemonAdverse.name);
+        File pokemonAdverse_Face = newFile("../ressources/AsciiArt/" + pokemonAdverse.name + "_Face.txt");
+         while (ready(pokemonAdverse_Face)){
+            println(readLine(pokemonAdverse_Face));
+        }
+        println();
+        println("Votre Pokemon : " + pokemonJoueur.name);
+        File pokemonJoueur_Face = newFile("../ressources/AsciiArt/" + pokemonJoueur.name + "_Face.txt");
+         while (ready(pokemonJoueur_Face)){
+            println(readLine(pokemonJoueur_Face));
+        }
+    }
+
+
+
     int questionPvAdversesRestantApresAttaque(Pokemon joueur, Pokemon adverse){
         println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name + " qui fait " + joueur.attaque.power + " de degats.");
-        println("Combien reste t'il de points de vies a " + adverse.name +" ?");   
+        println("Combien reste t'il de points de vies a " + adverse.name +" ?");
         return adverse.pv-joueur.attaque.power;
     }
 
@@ -254,6 +272,7 @@ class Pokemath extends Program{
         }else if(numNiveau == 4 || numNiveau == 5){
             bonneReponse = questionPourcentageDeVieRestant(joueur, adverse);
         }
+        afficherCombat(joueur, adverse);
 
         int reponseJoueur = readInt();
         if (bonneReponse == reponseJoueur) {
@@ -307,6 +326,23 @@ class Pokemath extends Program{
     //                              FONCTIONS DE MENU                             //
     ////////////////////////////////////////////////////////////////////////////////
 
+    // Affichage de l'écran titre
+    void afficherEcranTitre() {
+        clearScreen();
+        println();
+        File titre = newFile("../ressources/title.txt");
+         while (ready(titre)){
+            println(readLine(titre));
+        }
+        println();
+        println();
+        println("Appuyez sur entrée pour continuer");
+        readString();
+        
+        clearScreen();
+        println("Bienvenue sur PokeMath !");
+        println();
+    }
     // Fonction qui affiche la liste des niveaux
     void afficherListeNiveau(CSVFile listeNiveau, CSVFile listeJoueur, int idxJoueur) {
         println("Liste des niveaux disponibles :");
@@ -326,7 +362,18 @@ class Pokemath extends Program{
         }
     }
 
-
+    void adventureMode(){
+        int choixMod = 0;
+        CSVFile listeNiveau = loadCSV(CHEMIN_LISTE_NIVEAU, ',');
+        int nbColonneNiveau = columnCount(listeNiveau);
+        for(int cpt = 1 ; cpt < nbColonneNiveau ; cpt++){
+            if(choisirNiveau(choixMod) == 0 && cpt == nbColonneNiveau -1){
+                int aleaQuestion =(int) random()*cpt;
+                jouerNiveau(aleaQuestion);
+            }
+        }
+    }
+    
 
 
     // Fonction qui demande au joueur de choisir un niveau
@@ -336,14 +383,16 @@ class Pokemath extends Program{
         CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
 
         afficherListeNiveau(listeNiveau, listeJoueur, idxJoueur);
-
-        
-        
         println();
         boolean choisiNiveauDispo = false;
         int choixNiveau = 0;
         while(!choisiNiveauDispo){
-            print("Saisissez le niveau que vous voulez lancer : ");
+            String phraseNiveauChoix = "Saisissez le niveau que vous voulez lancer : ";
+            for(int idx = 0 ; idx< length(phraseNiveauChoix) ; idx++){
+                print(charAt(phraseNiveauChoix,idx));
+                //delay(50);
+            }
+
             choixNiveau = readInt();
             println();
 
@@ -416,22 +465,16 @@ class Pokemath extends Program{
     ////////////////////////////////////////////////////////////////////////////////
 
     void algorithm(){
-        clearScreen();
-        println();
-        File titre = newFile("../ressources/title.txt");
-         while (ready(titre)){
-            println(readLine(titre));
-        }
-        println();
-        println("Bienvenue sur PokeMath !");
-        println();
-
+        
+        afficherEcranTitre();
         String stopjeu =  "";
         
         int idxJoueur = demandeJoueur();
 
         while(!equals(stopjeu,"n")){
             jouerNiveau(idxJoueur);
+            if(idxJoueur == 0);
+            adventureMode();
             print("Veut-tu continuer ? (y/n)");
             println();
             stopjeu = readString();
