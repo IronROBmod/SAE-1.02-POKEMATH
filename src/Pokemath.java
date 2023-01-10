@@ -122,7 +122,7 @@ class Pokemath extends Program{
     }
 
     ////////////////////////////////////////////////////////////////////////////////
-    //                            LECTURE_FICHIERS_CSV                            //
+    //                            LECTURE DE FICHIERS                             //
     ////////////////////////////////////////////////////////////////////////////////
 
     
@@ -199,6 +199,16 @@ class Pokemath extends Program{
 
     }
 
+    // Renvoie sous forme de chaine un fichier texte
+    String lireFichierTxt(String chemin) {
+        File fichier = newFile(chemin);
+        String chaine = "";
+        while (ready(fichier)){
+            chaine = chaine + readLine(fichier) + "\n";
+        }
+        return chaine;
+    }
+
 
 
 
@@ -210,16 +220,9 @@ class Pokemath extends Program{
     void afficherCombat(Pokemon pokemonJoueur, Pokemon pokemonAdverse) {
         
         println("Pokemon Adverse : " + pokemonAdverse.name);
-        File pokemonAdverse_Face = newFile("../ressources/AsciiArt/" + pokemonAdverse.name + "_Face.txt");
-         while (ready(pokemonAdverse_Face)){
-            println(readLine(pokemonAdverse_Face));
-        }
-        println();
+        println(lireFichierTxt("../ressources/AsciiArt/" + pokemonAdverse.name + "_Face.txt"));
         println("Votre Pokemon : " + pokemonJoueur.name);
-        File pokemonJoueur_Face = newFile("../ressources/AsciiArt/" + pokemonJoueur.name + "_Face.txt");
-         while (ready(pokemonJoueur_Face)){
-            println(readLine(pokemonJoueur_Face));
-        }
+        println(lireFichierTxt("../ressources/AsciiArt/" + pokemonJoueur.name + "_Face.txt"));
     }
 
     int questionPvAdversesRestantApresAttaque(Pokemon joueur, Pokemon adverse){
