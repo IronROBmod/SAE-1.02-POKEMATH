@@ -82,8 +82,8 @@ class Pokemath extends Program{
             return Element.DRAGON;
         }else if(equals(chaine, "EAU")){
             return Element.EAU;
-        }else if(equals(chaine, "ELECTRQUE")){
-            return Element.ELECTRIQUE;
+        }else if(equals(chaine, "ELECTRIK")){
+            return Element.ELECTRIK;
         }else if(equals(chaine, "FEE")){
             return Element.FEE;
         }else if(equals(chaine, "FEU")){
@@ -108,8 +108,10 @@ class Pokemath extends Program{
             return Element.TENEBRES;
         }else if(equals(chaine, "VOL")){
             return Element.VOL;
-        }else{
+        }else if(equals(chaine, "NORMAL")){
             return Element.NORMAL;
+        }else{
+            return Element.AUCUN;
         } 
     }
 
@@ -138,7 +140,7 @@ class Pokemath extends Program{
         assertEquals(2, getNumLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), "Triplattaque"));
         assertEquals(618, getNumLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), "Lumière du Néant"));
         assertEquals(1, getNumLigne(loadCSV(CHEMIN_LISTE_POKEMONS), "Pikachu"));
-        assertEquals(5, getNumLigne(loadCSV(CHEMIN_LISTE_POKEMONS), "Deusolourdo"));
+        assertEquals(5, getNumLigne(loadCSV(CHEMIN_LISTE_POKEMONS), "Sablaireau"));
     }
 
     // Retourne une ligne donnée dans un fichier
@@ -156,8 +158,8 @@ class Pokemath extends Program{
     void testGetLigne() {
         assertArrayEquals(new String[]{"Triplattaque","Tri Attack","80","100","0","10","NORMAL","SPECIAL","Le lanceur envoie trois boules d’énergie simultanément. Peut aussi paralyser, brûler ou geler l’ennemi."}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 2));
         assertArrayEquals(new String[]{"Lumière du Néant","Light of Ruin","140","90","0","5","FEE","SPECIAL",""}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 618));
-        assertArrayEquals(new String[]{"Pikachu","100","211","146","116","136","136","216","ELECTRIC","","MOVE1","MOVE2","MOVE3","MOVE4"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 1));
-        assertArrayEquals(new String[]{"Deusolourdo", "100", "391", "236", "196","206","186","146","NORMAL","","MOVE1","MOVE2","MOVE3","MOVE4"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 5));
+        assertArrayEquals(new String[]{"Pikachu","211","146","116","136","136","216","ELECTRIK","","Mimi-Queue","Vive-Attaque","Cage-Éclair","Tonerre"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 1));
+        assertArrayEquals(new String[]{"Sablaireau","75","100","110","45","55","65","SOL","","Griffe","Jet de Sable","Roulade","Combo-Griffe"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 5));
     }
 
     Move loadAttaque(String nom) {
@@ -176,6 +178,24 @@ class Pokemath extends Program{
         assertEquals("Larcin", attaque2.name);
         assertEquals(Element.TENEBRES, attaque2.element);
         assertEquals(60, attaque2.power);
+
+    }
+
+    Pokemon loadPokemon(String nom) {
+        CSVFile listePokemon = loadCSV(CHEMIN_LISTE_POKEMONS);
+        String[] stats = getLigne(listePokemon, getNumLigne(listePokemon, nom));
+        return newPokemon(stats[0], 100, toInt(stats[1]), toInt(stats[6]), toElement(stats[7]), loadAttaque(stats[9]));
+    }
+
+    void testLoadPokemon() {
+        Pokemon pokemon = loadPokemon("Pikachu");
+        assertEquals("Pikachu", pokemon.name);
+        assertEquals(100, pokemon.niveau);
+        assertEquals(Element.ELECTRIK, pokemon.type1);
+        Pokemon pokemon2 = loadPokemon("Sablaireau");
+        assertEquals("Sablaireau", pokemon2.name);
+        assertEquals(100, pokemon2.niveau);
+        assertEquals(Element.SOL, pokemon2.type1);
 
     }
 
