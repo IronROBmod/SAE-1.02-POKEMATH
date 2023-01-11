@@ -2,12 +2,10 @@ import extensions.CSVFile;
 import extensions.File;
 class Pokemath extends Program{
 
-
     final String CHEMIN_SAUVEGARDE = "../ressources/Joueur.csv";
     final String CHEMIN_LISTE_ATTAQUES = "../ressources/ListeAttaques.csv";
     final String CHEMIN_LISTE_POKEMONS = "../ressources/ListePokemon.csv";
     final String CHEMIN_LISTE_NIVEAU = "../ressources/Niveau.csv";
-
 
     ////////////////////////////////////////////////////////////////////////////////
     //                           FONCTIONS DE CLASSES                             //
