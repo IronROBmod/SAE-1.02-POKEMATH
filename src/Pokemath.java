@@ -264,8 +264,8 @@ class Pokemath extends Program{
         }
 
     }
-    boolean stab (Pokemon joueur){
-        if(joueur.type == joueur.attaque.element){
+    boolean stab (Pokemon poke){
+        if(poke.type == poke.attaque.element){
             return true;
         }else{
             return false;
