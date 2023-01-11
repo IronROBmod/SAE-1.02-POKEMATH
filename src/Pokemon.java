@@ -3,6 +3,6 @@ class Pokemon{
     int niveau;
     int pv;
     int vitesse;
-    Element type1;
+    Element type;
     Move attaque;
 }

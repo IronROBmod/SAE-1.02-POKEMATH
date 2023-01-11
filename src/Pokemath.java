@@ -13,13 +13,13 @@ class Pokemath extends Program{
     //                           FONCTIONS DE CLASSES                             //
     ////////////////////////////////////////////////////////////////////////////////
 
-    Pokemon newPokemon(String name, int niveau, int pv, int vitesse, Element type1, Move attaque){
+    Pokemon newPokemon(String name, int niveau, int pv, int vitesse, Element type, Move attaque){
         Pokemon poke = new Pokemon();
         poke.name = name;
         poke.niveau = niveau;
         poke.pv = pv;
         poke.vitesse =vitesse;
-        poke.type1 =type1;
+        poke.type =type;
         poke.attaque = attaque;
         return poke;
     }
@@ -108,17 +108,17 @@ class Pokemath extends Program{
             return Element.TENEBRES;
         }else if(equals(chaine, "VOL")){
             return Element.VOL;
-        }else if(equals(chaine, "NORMAL")){
-            return Element.NORMAL;
         }else{
-            return Element.AUCUN;
-        } 
+            return Element.NORMAL;
+        }
     }
 
     void testToElement(){
         assertEquals(Element.ACIER,toElement("ACIER"));
         assertEquals(Element.NORMAL,toElement("NORMAL"));
         assertEquals(Element.FEE,toElement("FEE"));
+        assertEquals(Element.NORMAL,toElement("TRUC"));
+        assertEquals(Element.NORMAL,toElement(""));
     }
 
     // Converti une chaine en tableau de chaine avec une ligne par case
@@ -220,11 +220,11 @@ class Pokemath extends Program{
         Pokemon pokemon = loadPokemon("Pikachu");
         assertEquals("Pikachu", pokemon.name);
         assertEquals(100, pokemon.niveau);
-        assertEquals(Element.ELECTRIK, pokemon.type1);
+        assertEquals(Element.ELECTRIK, pokemon.type);
         Pokemon pokemon2 = loadPokemon("Sablaireau");
         assertEquals("Sablaireau", pokemon2.name);
         assertEquals(100, pokemon2.niveau);
-        assertEquals(Element.SOL, pokemon2.type1);
+        assertEquals(Element.SOL, pokemon2.type);
 
     }
 
@@ -264,7 +264,13 @@ class Pokemath extends Program{
         }
 
     }
-
+    boolean stab (Pokemon joueur){
+        if(joueur.type == joueur.attaque.element){
+            return true;
+        }else{
+            return false;
+        }
+    }
     int questionPvAdversesRestantApresAttaque(Pokemon joueur, Pokemon adverse){
         println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name + " qui fait " + joueur.attaque.power + " de degats.");
         println("Combien reste t'il de points de vies a " + adverse.name +" ?");
@@ -300,20 +306,32 @@ class Pokemath extends Program{
         println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque.name + " , à combien DE POURCENTAGE de vie est t'il ?");
         return pvPerdu*100/joueur.pv;
     }
+
+    int questionDegatAvecStab(Pokemon joueur, Pokemon adverse) {
+        if(stab(joueur)) {
+            println("Le pokemon " + joueur.name + " possede le type " + joueur.type + " et l'attaque " + joueur.attaque.name + " est de type " + joueur.attaque.element +" qui poséde "+ joueur.attaque.power + " de dégats, donc il y a STAB (donc il a un bonus de 50% sur son attaque)");
+            println("Combien de degats fait l'attaque " + joueur.attaque.name + " avec STAB ?");
+            return joueur.attaque.power + joueur.attaque.power/2;
+        }else{
+            println("Le pokemon " + joueur.name + " possede le type " + joueur.type + " et l'attaque " + joueur.attaque.name + " est de type " + joueur.attaque.element +" qui poséde "+ joueur.attaque.power + " de dégats, donc il n'y a pas STAB");
+            println("Combien de degats fait l'attaque " + joueur.attaque.name + " sans STAB ?");
+            return joueur.attaque.power;
+        }
+    }
     // Fonction qui joue un niveau
     boolean niveau(int numNiveau, Pokemon joueur, Pokemon adverse, int idxJoueur) {
         boolean res = false;
         int bonneReponse = 0;
-        if(numNiveau==0){
-            infiniteMode();
-        }else if(numNiveau==1){
+        if(numNiveau==1){
             bonneReponse = questionPvAdversesRestantApresAttaque(joueur, adverse);
         }else if(numNiveau==2){
             bonneReponse = questionNombreAttaquesNecessairesPourKO(joueur, adverse);
         }else if(numNiveau==3){
             bonneReponse = questionPvJoueurRestantApresSoin(joueur, adverse);
-        }else if(numNiveau == 4 || numNiveau == 5){
+        }else if(numNiveau == 4){
             bonneReponse = questionPourcentageDeVieRestant(joueur, adverse);
+        }else if(numNiveau == 5){
+            bonneReponse = questionDegatAvecStab(joueur, adverse);
         }
         afficherCombat(joueur, adverse);
 
@@ -405,7 +423,7 @@ class Pokemath extends Program{
         }
     }
 
-    void infiniteMode(){
+    /*void infiniteMode(){
         int choixMod = 0;
         CSVFile listeNiveau = loadCSV(CHEMIN_LISTE_NIVEAU, ',');
         int nbColonneNiveau = columnCount(listeNiveau);
@@ -415,7 +433,7 @@ class Pokemath extends Program{
                 jouerNiveau(aleaQuestion);
             }
         }
-    }
+    }*/
     
 
 
@@ -446,10 +464,6 @@ class Pokemath extends Program{
                 println("Vous avez choisi le niveau " + choixNiveau);
                 choisiNiveauDispo = true;
 
-            }else if(choixNiveau == 0){
-                choisiNiveauDispo = true;
-                infiniteMode();
-                println("Vous avez choisi le mode infini");
             }else{
                 println("Le niveau " + choixNiveau + " n'est pas disponible.");
             }
@@ -521,9 +535,6 @@ class Pokemath extends Program{
         while(!equals(stopjeu,"n")){
             jouerNiveau(idxJoueur);
             println("bug avant");
-            if(idxJoueur == 0) {
-            infiniteMode();
-            }
             print("Veut-tu continuer ? (y/n)");
             println();
             stopjeu = readString();
