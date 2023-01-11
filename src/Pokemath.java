@@ -687,9 +687,10 @@ class Pokemath extends Program{
         for(int idx=0; idx<nbLigneJoueur; idx++){
             if(equals(getCell(listeJoueur, idx, 0),nomJoueur)){
                 for(int cpt = 0 ; cpt < length(welcome); cpt++){
-                    println(charAt(welcome,cpt));
+                    print(charAt(welcome,cpt));
                     delay(50);
                 }
+                println();
                 idxJoueur = idx;
                 joueurInscrit = true;
             }
