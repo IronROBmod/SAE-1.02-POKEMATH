@@ -222,7 +222,7 @@ class Pokemath extends Program{
         assertArrayEquals(new String[]{"Triplattaque","Tri Attack","80","100","0","10","NORMAL","SPECIAL","Le lanceur envoie trois boules d’énergie simultanément. Peut aussi paralyser, brûler ou geler l’ennemi."}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 2));
         assertArrayEquals(new String[]{"Lumière du Néant","Light of Ruin","140","90","0","5","FEE","SPECIAL",""}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 618));
         assertArrayEquals(new String[]{"Pikachu","211","146","116","136","136","216","ELECTRIK","","Mimi-Queue","Vive-Attaque","Cage-Éclair","Tonnerre"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 1));
-        assertArrayEquals(new String[]{"Sablaireau","75","100","110","45","55","65","SOL","","Griffe","Jet de Sable","Roulade","Combo-Griffe"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 5));
+        assertArrayEquals(new String[]{"Sablaireau","291","236","256","126","146","166","SOL","","Griffe","Jet de Sable","Roulade","Combo-Griffe"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 5));
     }
 
     Move loadAttaque(String nom) {
@@ -340,9 +340,9 @@ class Pokemath extends Program{
         return false;
     }
 
-    void testCombat() {
+    /*void testCombat() {
         combat(loadPokemon("Evoli"), loadPokemon("Dracaufeu"));
-    }
+    }*/
     
     // Génere les stats d'un pokemon
     String[] affichageStats(Pokemon pokemon) {
@@ -534,10 +534,10 @@ class Pokemath extends Program{
     void lancerNiveau(int idxJoueur){
         Pokemon[] tableauPokemon = new Pokemon[]{loadPokemon("Carapuce"),loadPokemon("Parasect"),loadPokemon("Pikachu"),loadPokemon("Mewtwo") ,loadPokemon("Dracaufeu"), loadPokemon("Evoli"), loadPokemon("Rafflesia"), loadPokemon("Sablaireau")};
         int numNiveau = choisirNiveau(idxJoueur);
-        int aleaJoueur = (int) (random()*5);
-        int aleaAdverse = (int) (random()*5);
+        int aleaJoueur = (int) (random()*8);
+        int aleaAdverse = (int) (random()*8);
         while(aleaJoueur==aleaAdverse){
-            aleaAdverse = (int) (random()*3);
+            aleaAdverse = (int) (random()*8);
         }
         boolean niveau = jouerNiveau(numNiveau, tableauPokemon[aleaJoueur], tableauPokemon[aleaAdverse], idxJoueur);
         int nbtour  = 2;
@@ -701,6 +701,8 @@ class Pokemath extends Program{
         afficherEcranTitre();
         String stopjeu =  "";
         int idxJoueur = demandeJoueur();
+        //Décomenter pour lancer le mode duel
+        //modeDuel(idxJoueur); 
         while(!equals(stopjeu,"n")){
             lancerNiveau(idxJoueur);
             print("Veut-tu continuer ? (y/n)");
