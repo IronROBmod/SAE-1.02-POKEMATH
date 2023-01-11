@@ -1,5 +1,5 @@
 class Move{
-    String name;
+    String nom;
     Element element;
     int power;
 }

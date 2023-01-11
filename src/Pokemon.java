@@ -1,8 +1,9 @@
 class Pokemon{
-    String name;
+    String nom;
     int niveau;
     int pv;
     int vitesse;
-    Element type;
+    Element element1;
+    Element element2;
     Move attaque;
 }

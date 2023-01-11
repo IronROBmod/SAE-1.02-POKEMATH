@@ -13,37 +13,44 @@ class Pokemath extends Program{
     //                           FONCTIONS DE CLASSES                             //
     ////////////////////////////////////////////////////////////////////////////////
 
-    Pokemon newPokemon(String name, int niveau, int pv, int vitesse, Element type, Move attaque){
+    Pokemon newPokemon(String nom, int niveau, int pv, int vitesse, Element element1, Element element2, Move attaque){
         Pokemon poke = new Pokemon();
-        poke.name = name;
+        poke.nom = nom;
         poke.niveau = niveau;
         poke.pv = pv;
         poke.vitesse =vitesse;
-        poke.type =type;
+        poke.element1 =element1;
+        poke.element2 =element2;
         poke.attaque = attaque;
         return poke;
     }
 
-    Move newMove(String name, Element element, int power){
+    Move newMove(String nom, Element element, int power){
         Move move = new Move();
-        move.name = name;
+        move.nom = nom;
         move.element = element;
         move.power = power;
         return move;
     }
 
     String toString(Pokemon poke){
-        return "[Nom: " + poke.name + ", Niveau: " + poke.niveau + ", PV: " + poke.pv + "]";
+        String infoPoke = "[Nom: " + poke.nom +  ", Niveau: " + poke.niveau + ", Type : " + poke.element1 ;
+        if(poke.element2 != null ){
+            infoPoke = infoPoke +  " / " + poke.element2 ;
+        }
+        infoPoke = infoPoke + ", Points de Vie : " + poke.pv + "]";
+        return infoPoke ;
     }
 
     void testToStringPokemon(){
-        assertEquals("[Nom: bulbizarre, Niveau: 10, PV: 45]", toString(newPokemon("bulbizarre", 10, 45, 1, Element.PLANTE, newMove("tranche herbe", Element.PLANTE, 5))));
-        assertEquals("[Nom: salameche, Niveau: 10, PV: 45]", toString(newPokemon("salameche", 10, 45, 1, Element.FEU, newMove("lance flamme", Element.FEU, 8))));
-        assertEquals("[Nom: carapuce, Niveau: 10, PV: 45]", toString(newPokemon("carapuce", 10, 45, 1, Element.EAU, newMove("pistolet a eau", Element.EAU, 6))));
+        assertEquals("[Nom: bulbizarre, Niveau: 10, Type : PLANTE, Points de Vie : 45]", toString(newPokemon("bulbizarre", 10, 45, 1, Element.PLANTE,null, newMove("Tranche herbe", Element.PLANTE, 5))));
+        assertEquals("[Nom: dracaufeu, Niveau: 10, Type : FEU / VOL, Points de Vie : 45]", toString(newPokemon("dracaufeu", 10, 45, 1, Element.FEU, Element.VOL, newMove("Lance flamme", Element.FEU, 5))));
+        assertEquals("[Nom: salameche, Niveau: 10, Type : FEU, Points de Vie : 45]", toString(newPokemon("salameche", 10, 45, 1, Element.FEU,null, newMove("Lance flamme", Element.FEU, 8))));
+        assertEquals("[Nom: carapuce, Niveau: 10, Type : EAU, Points de Vie : 45]", toString(newPokemon("carapuce", 10, 45, 1, Element.EAU,null, newMove("Pistolet a eau", Element.EAU, 6))));
     }
 
     String toString(Move move){
-        return move.name + " qui fait " + move.power + " de degats.";
+        return move.nom + " qui fait " + move.power + " de degats.";
     }
 
     void testToStringMove(){
@@ -108,8 +115,10 @@ class Pokemath extends Program{
             return Element.TENEBRES;
         }else if(equals(chaine, "VOL")){
             return Element.VOL;
-        }else{
+        }else if(equals(chaine,"NORMAL")){
             return Element.NORMAL;
+        }else{
+            return Element.AUCUN;
         }
     }
 
@@ -117,8 +126,7 @@ class Pokemath extends Program{
         assertEquals(Element.ACIER,toElement("ACIER"));
         assertEquals(Element.NORMAL,toElement("NORMAL"));
         assertEquals(Element.FEE,toElement("FEE"));
-        assertEquals(Element.NORMAL,toElement("TRUC"));
-        assertEquals(Element.NORMAL,toElement(""));
+        assertEquals(Element.AUCUN,toElement(""));
     }
 
     // Converti une chaine en tableau de chaine avec une ligne par case
@@ -166,6 +174,7 @@ class Pokemath extends Program{
     }
 
     void testGetNumLigne() {
+
         assertEquals(2, getNumLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), "Triplattaque"));
         assertEquals(618, getNumLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), "Lumière du Néant"));
         assertEquals(1, getNumLigne(loadCSV(CHEMIN_LISTE_POKEMONS), "Pikachu"));
@@ -187,7 +196,7 @@ class Pokemath extends Program{
     void testGetLigne() {
         assertArrayEquals(new String[]{"Triplattaque","Tri Attack","80","100","0","10","NORMAL","SPECIAL","Le lanceur envoie trois boules d’énergie simultanément. Peut aussi paralyser, brûler ou geler l’ennemi."}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 2));
         assertArrayEquals(new String[]{"Lumière du Néant","Light of Ruin","140","90","0","5","FEE","SPECIAL",""}, getLigne(loadCSV(CHEMIN_LISTE_ATTAQUES, ';'), 618));
-        assertArrayEquals(new String[]{"Pikachu","211","146","116","136","136","216","ELECTRIK","","Mimi-Queue","Vive-Attaque","Cage-Éclair","Tonerre"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 1));
+        assertArrayEquals(new String[]{"Pikachu","211","146","116","136","136","216","ELECTRIK","","Mimi-Queue","Vive-Attaque","Cage-Éclair","Tonnerre"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 1));
         assertArrayEquals(new String[]{"Sablaireau","75","100","110","45","55","65","SOL","","Griffe","Jet de Sable","Roulade","Combo-Griffe"}, getLigne(loadCSV(CHEMIN_LISTE_POKEMONS), 5));
     }
 
@@ -200,11 +209,11 @@ class Pokemath extends Program{
 
     void testLoadAttaque() {
         Move attaque = loadAttaque("Triplattaque");
-        assertEquals("Triplattaque", attaque.name);
+        assertEquals("Triplattaque", attaque.nom);
         assertEquals(Element.NORMAL, attaque.element);
         assertEquals(80, attaque.power);
         Move attaque2 = loadAttaque("Larcin");
-        assertEquals("Larcin", attaque2.name);
+        assertEquals("Larcin", attaque2.nom);
         assertEquals(Element.TENEBRES, attaque2.element);
         assertEquals(60, attaque2.power);
 
@@ -213,18 +222,18 @@ class Pokemath extends Program{
     Pokemon loadPokemon(String nom) {
         CSVFile listePokemon = loadCSV(CHEMIN_LISTE_POKEMONS);
         String[] stats = getLigne(listePokemon, getNumLigne(listePokemon, nom));
-        return newPokemon(stats[0], 100, toInt(stats[1]), toInt(stats[6]), toElement(stats[7]), loadAttaque(stats[9]));
+        return newPokemon(stats[0], 100, toInt(stats[1]), toInt(stats[6]), toElement(stats[7]), toElement(stats[8]), loadAttaque(stats[9]));
     }
 
     void testLoadPokemon() {
         Pokemon pokemon = loadPokemon("Pikachu");
-        assertEquals("Pikachu", pokemon.name);
+        assertEquals("Pikachu", pokemon.nom);
         assertEquals(100, pokemon.niveau);
-        assertEquals(Element.ELECTRIK, pokemon.type);
+        assertEquals(Element.ELECTRIK, pokemon.element1);
         Pokemon pokemon2 = loadPokemon("Sablaireau");
-        assertEquals("Sablaireau", pokemon2.name);
+        assertEquals("Sablaireau", pokemon2.nom);
         assertEquals(100, pokemon2.niveau);
-        assertEquals(Element.SOL, pokemon2.type);
+        assertEquals(Element.SOL, pokemon2.element1);
 
     }
 
@@ -248,14 +257,14 @@ class Pokemath extends Program{
     // Affiche le combat
     void afficherCombat(Pokemon pokemonJoueur, Pokemon pokemonAdverse) {
         // Charge le dessin ascii des pokemons
-        String[] asciiPokemonJoueur = toTab(lireFichierTxt("../ressources/AsciiArt/" + pokemonJoueur.name + "_Face.txt"));
-        String[] asciiPokemonAdverse = toTab(lireFichierTxt("../ressources/AsciiArt/" + pokemonAdverse.name + "_Face.txt"));
+        String[] asciiPokemonJoueur = toTab(lireFichierTxt("../ressources/AsciiArt/" + pokemonJoueur.nom + "_Face.txt"));
+        String[] asciiPokemonAdverse = toTab(lireFichierTxt("../ressources/AsciiArt/" + pokemonAdverse.nom + "_Face.txt"));
 
         // Affiche le coté adverse
         print("                      ");
-        print("Votre Pokemon : " + pokemonJoueur.name);
+        print("Votre Pokemon : " + pokemonJoueur.nom);
         print("                                        ");
-        println("Pokemon Adverse : " + pokemonAdverse.name);
+        println("Pokemon Adverse : " + pokemonAdverse.nom);
         for(int idx = 0; idx < length(asciiPokemonAdverse); idx++) {
             print(asciiPokemonJoueur[idx]);
             print(" ");
@@ -264,22 +273,30 @@ class Pokemath extends Program{
         }
 
     }
-    boolean stab (Pokemon poke){
-        if(poke.type == poke.attaque.element){
+
+    boolean stab (Pokemon poke,Move move){
+        if(poke.element1 == move.element || poke.element2 == move.element && poke.element2 !=null ){
             return true;
         }else{
             return false;
         }
     }
+    void testStab(){
+        Pokemon pokemon = loadPokemon("Pikachu");
+        Move move = loadAttaque("Tonnerre");
+        assertTrue(stab(pokemon,move));
+        Move move1 = loadAttaque("Vive-Attaque");
+        assertFalse(stab(pokemon,move1));
+    }
     int questionPvAdversesRestantApresAttaque(Pokemon joueur, Pokemon adverse){
-        println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name + " qui fait " + joueur.attaque.power + " de degats.");
-        println("Combien reste t'il de points de vies a " + adverse.name +" ?");
+        println("Le " + adverse.nom + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.nom + " attaque avec " + joueur.attaque.nom + " qui fait " + joueur.attaque.power + " de degats.");
+        println("Combien reste t'il de points de vies a " + adverse.nom +" ?");
         return adverse.pv-joueur.attaque.power;
     }
 
     int questionNombreAttaquesNecessairesPourKO(Pokemon joueur, Pokemon adverse) {
-        println("Le " + adverse.name + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.name + " attaque avec " + joueur.attaque.name + " qui fait " + joueur.attaque.power + " de degats.");
-            println("Il faut attaquer combien de fois " + adverse.name +" avec " + joueur.attaque.name + " pour qu'il soit KO ?");   
+        println("Le " + adverse.nom + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.nom + " attaque avec " + joueur.attaque.nom + " qui fait " + joueur.attaque.power + " de degats.");
+            println("Il faut attaquer combien de fois " + adverse.nom +" avec " + joueur.attaque.nom + " pour qu'il soit KO ?");   
             int pv = adverse.pv;
             int bonneReponse = 0;
             while(pv>0){
@@ -293,8 +310,8 @@ class Pokemath extends Program{
         int aleaSoin = (int) (random()*10) + 1;
         int aleaAttaque = (int) random()*3 + 1;
         int pvPerdu = adverse.attaque.power * aleaAttaque;
-        println("Le pokemon " + joueur.name + " tiens comme objet les restes qui permet de le soigner de "+ aleaSoin +" pv " );
-        println("Sachant qu'il possede " + joueur.pv +" pv et qu'il a  perdu pendant le combat "+ pvPerdu+ " pv, a combien de pv " + joueur.name + " sera t'il ?");
+        println("Le pokemon " + joueur.nom + " tiens comme objet les restes qui permet de le soigner de "+ aleaSoin +" pv " );
+        println("Sachant qu'il possede " + joueur.pv +" pv et qu'il a  perdu pendant le combat "+ pvPerdu+ " pv, a combien de pv " + joueur.nom + " sera t'il ?");
         return joueur.pv - pvPerdu + aleaSoin;
     }
 
@@ -302,26 +319,43 @@ class Pokemath extends Program{
         int aleaPourCent = (int) (random()*100) + 1;
         int aleaAttaque = (int) random()*3 + 1;
         int pvPerdu = adverse.attaque.power * aleaAttaque;
-        println("Le pokemon " + joueur.name + " à "+ joueur.pv +" pv " );
-        println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque.name + " , à combien DE POURCENTAGE de vie est t'il ?");
+        println("Le pokemon " + joueur.nom + " à "+ joueur.pv +" pv " );
+        println("Sachant qu'il a perdu " + pvPerdu +" pv par l'attaque "+ adverse.attaque.nom + " , à combien DE POURCENTAGE de vie est t'il ?");
         return pvPerdu*100/joueur.pv;
     }
 
     int questionDegatAvecStab(Pokemon joueur, Pokemon adverse) {
-        if(stab(joueur)) {
-            println("Le pokemon " + joueur.name + " possede le type " + joueur.type + " et l'attaque " + joueur.attaque.name + " est de type " + joueur.attaque.element +" qui poséde "+ joueur.attaque.power + " de dégats, donc il y a STAB (donc il a un bonus de 50% sur son attaque)");
-            println("Combien de degats fait l'attaque " + joueur.attaque.name + " avec STAB ?");
+        if(stab(joueur,joueur.attaque)) {
+            println("Le pokemon " + joueur.nom + " possede le type " + joueur.element1 + " et l'attaque " + joueur.attaque.nom + " est de type " + joueur.attaque.element +" qui poséde "+ joueur.attaque.power + " de dégats, donc il y a STAB (donc il a un bonus de 50% sur son attaque)");
+            println("Combien de degats fait l'attaque " + joueur.attaque.nom + " avec STAB ?");
             return joueur.attaque.power + joueur.attaque.power/2;
         }else{
-            println("Le pokemon " + joueur.name + " possede le type " + joueur.type + " et l'attaque " + joueur.attaque.name + " est de type " + joueur.attaque.element +" qui poséde "+ joueur.attaque.power + " de dégats, donc il n'y a pas STAB");
-            println("Combien de degats fait l'attaque " + joueur.attaque.name + " sans STAB ?");
+            println("Le pokemon " + joueur.nom + " possede le type " + joueur.element1 + " et l'attaque " + joueur.attaque.nom + " est de type " + joueur.attaque.element +" qui poséde "+ joueur.attaque.power + " de dégats, donc il n'y a pas STAB");
+            println("Combien de degats fait l'attaque " + joueur.attaque.nom + " sans STAB ?");
             return joueur.attaque.power;
         }
     }
+
+    void sauvegardeNiveauReussi(int numNiveau, int idxJoueur){
+        CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
+        String [][] csv = new String[rowCount(listeJoueur)][columnCount(listeJoueur)];
+        for(int lig = 1; lig < rowCount(listeJoueur); lig++) {
+            for(int col = 1; col < columnCount(listeJoueur); col++) {
+                if(col==numNiveau+1 && lig==idxJoueur){
+                    csv[lig][col]="true";
+                }else{
+                    csv[lig][col]=getCell(listeJoueur, lig, col);
+                }
+            }
+        }
+        saveCSV(csv, CHEMIN_SAUVEGARDE);
+    }
+
     // Fonction qui joue un niveau
-    boolean niveau(int numNiveau, Pokemon joueur, Pokemon adverse, int idxJoueur) {
+    boolean jouerNiveau(int numNiveau, Pokemon joueur, Pokemon adverse, int idxJoueur) {
         boolean res = false;
         int bonneReponse = 0;
+        afficherCombat(joueur, adverse);
         if(numNiveau==1){
             bonneReponse = questionPvAdversesRestantApresAttaque(joueur, adverse);
         }else if(numNiveau==2){
@@ -333,51 +367,33 @@ class Pokemath extends Program{
         }else if(numNiveau == 5){
             bonneReponse = questionDegatAvecStab(joueur, adverse);
         }
-        afficherCombat(joueur, adverse);
-
+        
         int reponseJoueur = readInt();
+
         if (bonneReponse == reponseJoueur) {
             println("Bravo ! La reponse etait bien de " + bonneReponse + ".");
             res = true;
-            CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
-            int nbLigneJoueur = rowCount(listeJoueur);
-            int nbColonneJoueur = columnCount(listeJoueur);
-            String [][] csv = new String[nbLigneJoueur][nbColonneJoueur];
-            for(int lig = 1; lig < nbLigneJoueur; lig++) {
-                for(int col = 1; col < nbColonneJoueur; col++) {
-                    if(col==numNiveau+1 && lig==idxJoueur){
-                        csv[lig][col]="true";
-                    }else{
-                        csv[lig][col]=getCell(listeJoueur, lig, col);
-                    }
-                }
-            }
-            saveCSV(csv, CHEMIN_SAUVEGARDE);
+            sauvegardeNiveauReussi(numNiveau,idxJoueur);
             println("Le niveau " + (numNiveau+1) + " est DISPONIBLE !!!");
         } else {
-            println("Perdu :( " + joueur.name + " est K.O.");
+            println("Perdu :( " + joueur.nom + " est K.O.");
         }
         return res;
     }
 
-    void jouerNiveau(int idxJoueur){
-
-        //Pokemon[] tableauPokemon = new Pokemon[]{bulbizarre, salameche, carapuce};
+    void lancerNiveau(int idxJoueur){
         Pokemon[] tableauPokemon = new Pokemon[]{loadPokemon("Pikachu"), loadPokemon("Dracaufeu"), loadPokemon("Évoli"), loadPokemon("Rafflesia"), loadPokemon("Sablaireau")};
-
         int numNiveau = choisirNiveau(idxJoueur);
-
         int aleaJoueur = (int) (random()*5);
         int aleaAdverse = (int) (random()*5);
         while(aleaJoueur==aleaAdverse){
             aleaAdverse = (int) (random()*3);
         }
-
-        boolean niveau = niveau(numNiveau, tableauPokemon[aleaJoueur], tableauPokemon[aleaAdverse], idxJoueur);
+        boolean niveau = jouerNiveau(numNiveau, tableauPokemon[aleaJoueur], tableauPokemon[aleaAdverse], idxJoueur);
         int nbtour  = 2;
         while(niveau == false && nbtour != 0){
             println("Retente ta chance ! Il te reste " + nbtour  + " essaies");
-            niveau = niveau(numNiveau, tableauPokemon[aleaJoueur], tableauPokemon[aleaAdverse], idxJoueur);
+            niveau = jouerNiveau(numNiveau, tableauPokemon[aleaJoueur], tableauPokemon[aleaAdverse], idxJoueur);
             nbtour= nbtour -1;
         }
     }
@@ -430,7 +446,7 @@ class Pokemath extends Program{
         for(int cpt = 1 ; cpt <= nbColonneNiveau ; cpt++){
             if(choisirNiveau(choixMod) == 0 && cpt == nbColonneNiveau -1){
                 int aleaQuestion =(int) random()*cpt;
-                jouerNiveau(aleaQuestion);
+                lancerNiveau(aleaQuestion);
             }
         }
     }*/
@@ -533,7 +549,7 @@ class Pokemath extends Program{
         int idxJoueur = demandeJoueur();
 
         while(!equals(stopjeu,"n")){
-            jouerNiveau(idxJoueur);
+            lancerNiveau(idxJoueur);
             println("bug avant");
             print("Veut-tu continuer ? (y/n)");
             println();
