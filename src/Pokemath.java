@@ -289,7 +289,10 @@ class Pokemath extends Program{
     int questionPvAdversesRestantApresAttaque(Pokemon joueur, Pokemon adverse){
         println("Le " + adverse.nom + " adverse a " + adverse.pv + " points de vies. Si votre " + joueur.nom + " attaque avec " + joueur.attaque.nom + " qui fait " + joueur.attaque.power + " de degats.");
         println("Combien reste t'il de points de vies a " + adverse.nom +" ?");
-        return adverse.pv-joueur.attaque.power;
+        if(joueur.attaque.power != 0){
+            return adverse.pv-joueur.attaque.power;
+        }
+        return questionPvAdversesRestantApresAttaque(joueur, adverse);
     }
 
     int questionNombreAttaquesNecessairesPourKO(Pokemon joueur, Pokemon adverse) {
@@ -337,8 +340,8 @@ class Pokemath extends Program{
     void sauvegardeNiveauReussi(int numNiveau, int idxJoueur){
         CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
         String [][] csv = new String[rowCount(listeJoueur)][columnCount(listeJoueur)];
-        for(int lig = 1; lig < rowCount(listeJoueur); lig++) {
-            for(int col = 1; col < columnCount(listeJoueur); col++) {
+        for(int lig = 0; lig < rowCount(listeJoueur); lig++) {
+            for(int col = 0; col < columnCount(listeJoueur); col++) {
                 if(col==numNiveau+1 && lig==idxJoueur){
                     csv[lig][col]="true";
                 }else{
@@ -380,7 +383,7 @@ class Pokemath extends Program{
     }
 
     void lancerNiveau(int idxJoueur){
-        Pokemon[] tableauPokemon = new Pokemon[]{loadPokemon("Pikachu"), loadPokemon("Dracaufeu"), loadPokemon("Évoli"), loadPokemon("Rafflesia"), loadPokemon("Sablaireau")};
+        Pokemon[] tableauPokemon = new Pokemon[]{loadPokemon("Pikachu"), loadPokemon("Dracaufeu"), loadPokemon("Evoli"), loadPokemon("Rafflesia"), loadPokemon("Sablaireau")};
         int numNiveau = choisirNiveau(idxJoueur);
         int aleaJoueur = (int) (random()*5);
         int aleaAdverse = (int) (random()*5);
