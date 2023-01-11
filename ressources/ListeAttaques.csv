@@ -249,7 +249,7 @@ Direct Toxik;Poison Jab;80;100;0;20;POISON;PHYSIQUE;Attaque l’ennemi avec un t
 Éructation;Belch;120;90;0;10;POISON;SPECIAL;
 Toxik;Toxic;0;90;0;10;POISON;AUTRE;Empoisonne gravement l’ennemi. Les dégâts dus au poison augmentent à chaque tour.
 Pics Toxik;Toxic Spikes;0;0;0;20;POISON;AUTRE;Lance des pics autour de l’ennemi. Ils empoisonnent les ennemis qui entrent au combat.
-Poudre Toxik;Poison Powder;0;75;0;35;POISON;AUTRE;Une poudre toxique empoisonne l’ennemi.
+Poudre Toxik;Poison Powder;1;75;0;35;POISON;AUTRE;Une poudre toxique empoisonne l’ennemi.
 Purédpois;Smog;30;70;0;20;POISON;SPECIAL;Le lanceur attaque à l’aide d’une éruption de gaz répugnants. Peut aussi empoisonner l’ennemi.
 Détritus;Sludge;65;100;0;20;POISON;SPECIAL;Des détritus toxiques sont projetés sur l’ennemi. Peut aussi l’empoisonner.
 Crochet Venin;Poison Fang;50;100;0;15;POISON;PHYSIQUE;Le lanceur mord l’ennemi de ses crocs toxiques. Peut aussi l’empoisonner gravement.
@@ -305,7 +305,7 @@ Sécrétion;String Shot;0;95;0;40;INSECTE;AUTRE;Le lanceur crache de la soie pou
 Double-Dard;Twineedle;25;100;0;20;INSECTE;PHYSIQUE;Un double coup de dard qui transperce l’ennemi 2 fois d’affilée. Peut aussi l’empoisonner.
 Dard Mortel;Fell Stinger;30;100;0;25;INSECTE;PHYSIQUE;
 Rayon Signal;Signal Beam;75;100;0;15;INSECTE;SPECIAL;Le lanceur projette un rayon de lumière sinistre. Peut aussi rendre l’ennemi confus.
-Toile Gluante;Sticky Web;0;0;0;20;INSECTE;AUTRE;
+Toile Gluante;Sticky Web;1;0;0;20;INSECTE;AUTRE;
 Vent Argenté;Silver Wind;60;100;0;5;INSECTE;SPECIAL;Vent qui projette des écailles poudreuses sur l’ennemi. Peut aussi monter toutes les stats du lanceur.
 Plaie-Croix;X-Scissor;80;100;0;15;INSECTE;PHYSIQUE;Le lanceur taillade l’ennemi en utilisant ses faux ou ses griffes comme une paire de ciseaux.
 Papillodanse;Quiver Dance;0;0;0;20;INSECTE;AUTRE;Une danse mystique dont le rythme parfait augmente l’Attaque Spéciale, la Défense Spéciale et la Vitesse du lanceur.

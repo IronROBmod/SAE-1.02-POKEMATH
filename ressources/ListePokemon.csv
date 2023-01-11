@@ -1,5 +1,5 @@
 ﻿NAME,PV,ATTAQUE,ATTACK_SPECIAL,DEFENSE,DEFENSE_SPECIAL,VITESSE,ELEMENT1,ELEMENT2,MOVE1,MOVE2,MOVE3,MOVE4
-Pikachu,211,146,116,136,136,216,ELECTRIK,,Mimi-Queue,Vive-Attaque,Cage-Éclair,Tonnerre
+Pikachu,211,146,116,136,136,216,ELECTRIK,,Queue de Fer,Vive-Attaque,Cage-Éclair,Tonnerre
 Dracaufeu,297,204,192,254,206,236,FEU,VOL,Griffe,Dracogriffe,Griffe Ombre,Rugissement
 Evoli,251,146,136,126,166,146,NORMAL,,Charge,Jet de Sable,Vive-Attaque,Morsure
 Rafflesia,75,80,85,110,90,50,PLANTE,POISON,Poudre Toxik,Tempête Florale,Dance-Fleur,Lance-Soleil

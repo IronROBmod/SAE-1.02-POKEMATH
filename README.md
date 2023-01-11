@@ -6,7 +6,7 @@ Contacts : <hocine.chebout.etu@univ-lille.fr> , <theo.cattaneo.etu@univ-lille.fr
 
 # Présentation de POKEMATH
 <Remis en contexte>
-Avec lapopularité de l'univers pokémon (jeux , série animé, cartes à jouer, etc...) nous voulions avoir un jeu qui serait a la fois connu de tous : du parfait maître Pokemon en passant par ceux qui connaisse que Pikachu ou dracaufeu.
+Avec la popularité de l'univers pokémon (jeux , série animé, cartes à jouer, etc...) nous voulions avoir un jeu qui serait a la fois connu de tous : du parfait maître Pokemon en passant par ceux qui connaisse que Pikachu ou dracaufeu.
 Nous avons eu donc l'idée de crée un jeu qui aurait comme théme les pokémons.
 Ensuite, aprés plusieur analyse, (en particulier celui du TIMMS : Le dernier classement TIMMS, classement international sur l'enseignement des maths), nous apris avec tristesse que la France se place au dernier rang de l'Europe, et 40e dans les pays de l'OCDE, derrière l'Albanie et le Kazakhstan en mathématiques, ILS FALLAIENT REMEDIER A CA !
 C'est en grande partie pour cela que nous avons comme idées de prendre comme "théme pédagogique" les mathématiques, pour etre plus précis les calculs.
@@ -30,3 +30,9 @@ Permet la compilation des fichiers présents dans 'src' et création des fichier
 ./run.sh Pokemath
 ```
 Permet le lancement du jeu
+
+# Activer le mode duel
+
+Un mode duel a été crée mais nous n'avvons pas réussi à le faire se lancer depuis le menu principale
+Pour le faire se lancer automatiquement après la saisie du nom :
+ -> décommentez "//modeDuel(idxJoueur);" dans l'alogrithme principale (Pokemath.java - ligne 717)

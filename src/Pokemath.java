@@ -33,7 +33,7 @@ class Pokemath extends Program{
 
     String toString(Pokemon poke){
         String infoPoke = "[Nom: " + poke.nom + ", Type : " + poke.element1 ;
-        if(poke.element2 != null ){
+        if(poke.element2 != Element.AUCUN ){
             infoPoke = infoPoke +  " / " + poke.element2 ;
         }
         infoPoke = infoPoke + ", Points de Vie : " + poke.pv + "]";
@@ -41,10 +41,12 @@ class Pokemath extends Program{
     }
 
     void testToStringPokemon(){
-        //assertEquals("[Nom: Bulbizarre, Type : PLANTE, Points de Vie : 45]", toString(loadPokemon("Bulbizarre")));
+        //assertEquals("[Nom: Bulbizarre, Type : PLANTE, Points de Vie : 45]", toString(loadPokemon("Bulbizarre")));    pas dans la liste
         assertEquals("[Nom: Dracaufeu, Type : FEU / VOL, Points de Vie : 297]", toString(loadPokemon("Dracaufeu")));
-        //assertEquals("[Nom: Salameche, Type : FEU, Points de Vie : 45]", toString(loadPokemon("Salameche")));
+        //assertEquals("[Nom: Salameche, Type : FEU, Points de Vie : 45]", toString(loadPokemon("Salameche")));     pas dans la liste
         assertEquals("[Nom: Carapuce, Type : EAU, Points de Vie : 229]", toString(loadPokemon("Carapuce")));
+        assertEquals("[Nom: Pikachu, Type : ELECTRIK, Points de Vie : 211]", toString(loadPokemon("Pikachu")));
+        assertEquals("[Nom: Evoli, Type : NORMAL, Points de Vie : 251]", toString(loadPokemon("Evoli")));
     }
 
     String toString(Move move){
@@ -536,10 +538,14 @@ class Pokemath extends Program{
         int numNiveau = choisirNiveau(idxJoueur);
         int aleaJoueur = (int) (random()*8);
         int aleaAdverse = (int) (random()*8);
+        boolean niveau = true;
         while(aleaJoueur==aleaAdverse){
             aleaAdverse = (int) (random()*8);
         }
-        boolean niveau = jouerNiveau(numNiveau, tableauPokemon[aleaJoueur], tableauPokemon[aleaAdverse], idxJoueur);
+        if(numNiveau != 0) {
+            niveau = jouerNiveau(numNiveau, tableauPokemon[aleaJoueur], tableauPokemon[aleaAdverse], idxJoueur);
+        }
+        
         int nbtour  = 2;
         while(niveau == false && nbtour != 0){
             println("Retente ta chance ! Il te reste " + nbtour  + " essaies");
@@ -586,6 +592,8 @@ class Pokemath extends Program{
                 println(getCell(listeNiveau, idx-1, 0));
             }
         }
+        println();
+        println("Tapez 0 pour quitter");
     }
 
     void modeDuel(int idxJoueur){
@@ -633,7 +641,7 @@ class Pokemath extends Program{
                 println("Vous avez choisi le niveau " + choixNiveau);
                 choisiNiveauDispo = true;
 
-            }else{
+            }else if (!equals(choixNiveau, "0")){
                 println("Le niveau " + choixNiveau + " n'est pas disponible.");
             }
         }
