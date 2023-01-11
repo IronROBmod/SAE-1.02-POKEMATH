@@ -163,7 +163,6 @@ class Pokemath extends Program{
     
     // Renvoie le numéro de ligne d'une chaine dans la première colonne
     int getNumLigne(CSVFile fichier, String chaine) {
-        print(chaine);
         for(int numLigne = 1; numLigne < rowCount(fichier); numLigne++) {
             if (equals(getCell(fichier, numLigne, 0), chaine)) {
                 return numLigne;
