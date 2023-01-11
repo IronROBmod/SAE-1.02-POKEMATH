@@ -1,8 +1,9 @@
 ﻿NAME,PV,ATTAQUE,ATTACK_SPECIAL,DEFENSE,DEFENSE_SPECIAL,VITESSE,ELEMENT1,ELEMENT2,MOVE1,MOVE2,MOVE3,MOVE4
 Pikachu,211,146,116,136,136,216,ELECTRIK,,Mimi-Queue,Vive-Attaque,Cage-Éclair,Tonnerre
 Dracaufeu,297,204,192,254,206,236,FEU,VOL,Griffe,Dracogriffe,Griffe Ombre,Rugissement
-Evoli,55,55,50,45,65,55,NORMAL,,Charge,Jet de Sable,Vive-Attaque,Morsure
+Evoli,251,146,136,126,166,146,NORMAL,,Charge,Jet de Sable,Vive-Attaque,Morsure
 Rafflesia,75,80,85,110,90,50,PLANTE,POISON,Poudre Toxik,Tempête Florale,Dance-Fleur,Lance-Soleil
-Sablaireau,75,100,110,45,55,65,SOL,,Griffe,Jet de Sable,Roulade,Combo-Griffe
-Mygavolt,281,159,156,230,156,252,BUG,ELECTRIK,Toile Gluante,Fatal-Foudre,Change Éclair,Giga-Sangsue
+Sablaireau,291,236,256,126,146,166,SOL,,Griffe,Jet de Sable,Roulade,Combo-Griffe
+Parasect,323,288,258,258,258,158,BUG,PLANTE,Toile Gluante,Repos,Ultralaser,Giga-Sangsue
 Mewtwo,353,256,216,344,216,296,PSY,,Frappe Psy,Laser Glace,Vent Violent,Aurasphère
+Carapuce,229,132,166,136,164,122,EAU,Aqua-Jet,Colère,Contre,Tunnel

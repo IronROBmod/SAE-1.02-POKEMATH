@@ -44,7 +44,7 @@ class Pokemath extends Program{
         //assertEquals("[Nom: Bulbizarre, Type : PLANTE, Points de Vie : 45]", toString(loadPokemon("Bulbizarre")));
         assertEquals("[Nom: Dracaufeu, Type : FEU / VOL, Points de Vie : 297]", toString(loadPokemon("Dracaufeu")));
         //assertEquals("[Nom: Salameche, Type : FEU, Points de Vie : 45]", toString(loadPokemon("Salameche")));
-        //assertEquals("[Nom: Carapuce, Type : EAU, Points de Vie : 45]", toString(loadPokemon("Carapuce")));
+        assertEquals("[Nom: Carapuce, Type : EAU, Points de Vie : 229]", toString(loadPokemon("Carapuce")));
     }
 
     String toString(Move move){
@@ -105,7 +105,7 @@ class Pokemath extends Program{
 
     }
 
-
+    // Convertit une chaine vers un type element
     Element toElement(String chaine){
         if(equals(chaine, "ACIER")){
             return Element.ACIER;
@@ -277,45 +277,74 @@ class Pokemath extends Program{
     //                             FONCTIONS DE JEU                               //
     ////////////////////////////////////////////////////////////////////////////////
 
-    int calculDegat(Pokemon pokemonAttaquant, Pokemon pokemonDefenseur, Move attaqueUtilisee) {
-        println(attaqueUtilisee.power);
-        return pokemonAttaquant.attaque.power;
+    int calculDegat(Pokemon pokemonAttaquant, Pokemon pokemonDefenseur) {
+        return pokemonAttaquant.attaque.power * 100 / (int)((random() * 40) + 80  );
     }
 
-    //boolean questionEnCoursDeDuel(pokemonJoueur)
+    boolean questionDuelAttaque(Pokemon pokemonJoueur, Pokemon pokemonAdverse) {
+        int degats = calculDegat(pokemonJoueur, pokemonAdverse);
+        println("Le " + pokemonAdverse.nom + " adverse a " + pokemonAdverse.pv + " points de vie restant.");
+        println("Votre " + pokemonJoueur.nom + " utilise " + pokemonJoueur.attaque.nom + " et inflige " + degats + " degats au " + pokemonAdverse.nom + " adverse");
+        print("Combien reste t'il de points de vie au " + pokemonAdverse.nom + " adverse après votre attaque ? ");
+        return (readInt() == pokemonAdverse.pv - degats);
+    }
+
+    boolean questionDuelDefense(Pokemon pokemonJoueur, Pokemon pokemonAdverse) {
+        int degats = calculDegat(pokemonAdverse, pokemonJoueur);
+        println("Votre " + pokemonJoueur.nom + " a " + pokemonJoueur.pv + " points de vie restant.");
+        println("Le " + pokemonAdverse.nom + " utilise " + pokemonAdverse.attaque.nom + " et inflige " + degats + " degats à votre " + pokemonJoueur.nom);
+        print("Combien reste t'il de points de vie à votre " + pokemonJoueur.nom + " après son attaque ? ");
+        return (readInt() == pokemonJoueur.pv - degats);
+    }
+
+    // Lance un duel
     boolean combat(Pokemon pokemonJoueur, Pokemon pokemonAdverse) {
         boolean tourJoueur = true;
         while (pokemonJoueur.pv > 0 && pokemonAdverse.pv > 0) {
+            clearScreen();
+            println();
+            afficherCombat(pokemonJoueur, pokemonAdverse);
             if (tourJoueur) {
-                clearScreen();
-                println();
-                afficherCombat(pokemonJoueur, pokemonAdverse);
-                if(questionPvAdversesRestantApresAttaque(pokemonJoueur, pokemonAdverse) == readInt()) {
-                    pokemonAdverse.pv = pokemonAdverse.pv - calculDegat(pokemonJoueur, pokemonAdverse, pokemonJoueur.attaque);
-                    println("Bonne réponse");
+                if(questionDuelAttaque(pokemonJoueur, pokemonAdverse)) {
+                    pokemonAdverse.pv = pokemonAdverse.pv - calculDegat(pokemonJoueur, pokemonAdverse);
+                    println("Bonne réponse !");
+                    println("Les dégats ont étés infligés au pokémon adverse. :)");
 
                 } else {
                     println("Mauvaise réponse");
+                    println("Les dégats n'ont pas étés infligés au pokémon adverse. :(");
                 }
 
-                readString();
+                delay(2000);
                 
                 tourJoueur = false;
             } else {
-                afficherCombat(pokemonJoueur, pokemonAdverse);
-                pokemonJoueur.pv = pokemonJoueur.pv - calculDegat(pokemonAdverse, pokemonJoueur, pokemonAdverse.attaque);
+                if(questionDuelDefense(pokemonJoueur, pokemonAdverse)) {
+                    pokemonAdverse.pv = pokemonAdverse.pv - calculDegat(pokemonJoueur, pokemonAdverse);
+                    println("Bonne réponse !");
+                    println("Votre pokémon n'a reçu aucun dégats. :)");
+
+                } else {
+                    println("Mauvaise réponse");
+                    println("Votre a reçu des dégats. :(");
+                }
+
+                readString();
                 tourJoueur = true;
             }
             
-            
         }
-        return true;
+        if (pokemonAdverse.pv <= 0) {
+            return true;
+        }
+        return false;
     }
 
     void testCombat() {
-        //combat(loadPokemon("Evoli"), loadPokemon("Dracaufeu"));
+        combat(loadPokemon("Evoli"), loadPokemon("Dracaufeu"));
     }
     
+    // Génere les stats d'un pokemon
     String[] affichageStats(Pokemon pokemon) {
         String[] affichageStats = new String[3];
         affichageStats[0] = "Nom : " + pokemon.nom;
@@ -445,8 +474,23 @@ class Pokemath extends Program{
         String [][] csv = new String[rowCount(listeJoueur)][columnCount(listeJoueur)];
         for(int lig = 0; lig < rowCount(listeJoueur); lig++) {
             for(int col = 0; col < columnCount(listeJoueur); col++) {
-                if(col==numNiveau+1 && lig==idxJoueur){
+                if(col==numNiveau+2 && lig==idxJoueur){
                     csv[lig][col]="true";
+                }else{
+                    csv[lig][col]=getCell(listeJoueur, lig, col);
+                }
+            }
+        }
+        saveCSV(csv, CHEMIN_SAUVEGARDE);
+    }
+
+    void sauvegardeScoreDuel(int score, int idxJoueur){
+        CSVFile listeJoueur = loadCSV(CHEMIN_SAUVEGARDE, ',');
+        String [][] csv = new String[rowCount(listeJoueur)][columnCount(listeJoueur)];
+        for(int lig = 0; lig < rowCount(listeJoueur); lig++) {
+            for(int col = 0; col < columnCount(listeJoueur); col++) {
+                if(col == 1 && lig == idxJoueur){
+                    csv[lig][col] = "" + score;
                 }else{
                     csv[lig][col]=getCell(listeJoueur, lig, col);
                 }
@@ -467,9 +511,11 @@ class Pokemath extends Program{
         }else if(numNiveau==3){
             bonneReponse = questionPvJoueurRestantApresSoin(joueur, adverse);
         }else if(numNiveau == 4){
-            bonneReponse = questionPourBaisseDeVitesse(joueur, loadPokemon("Mygavolt"));
+            bonneReponse = questionPourBaisseDeVitesse(joueur, loadPokemon("Parasect"));
         }else if(numNiveau == 5){
             bonneReponse = questionDegatAvecStab(joueur, adverse);
+        }else if(numNiveau == 6){
+            modeDuel(idxJoueur);
         }
         
         int reponseJoueur = readInt();
@@ -486,7 +532,7 @@ class Pokemath extends Program{
     }
 
     void lancerNiveau(int idxJoueur){
-        Pokemon[] tableauPokemon = new Pokemon[]{loadPokemon("Pikachu"), loadPokemon("Dracaufeu"), loadPokemon("Evoli"), loadPokemon("Rafflesia"), loadPokemon("Sablaireau")};
+        Pokemon[] tableauPokemon = new Pokemon[]{loadPokemon("Carapuce"),loadPokemon("Parasect"),loadPokemon("Pikachu"),loadPokemon("Mewtwo") ,loadPokemon("Dracaufeu"), loadPokemon("Evoli"), loadPokemon("Rafflesia"), loadPokemon("Sablaireau")};
         int numNiveau = choisirNiveau(idxJoueur);
         int aleaJoueur = (int) (random()*5);
         int aleaAdverse = (int) (random()*5);
@@ -527,7 +573,7 @@ class Pokemath extends Program{
     void afficherListeNiveau(CSVFile listeNiveau, CSVFile listeJoueur, int idxJoueur) {
         println("Liste des niveaux disponibles :");
         println();
-        for(int idx = 1; idx < columnCount(listeJoueur); idx++) {
+        for(int idx = 1; idx < columnCount(listeJoueur) ; idx++) {
             if(equals(getCell(listeJoueur, idxJoueur, idx),"true")){
                 println(getCell(listeNiveau, idx-1, 0));
             }
@@ -535,24 +581,28 @@ class Pokemath extends Program{
         println();
         println("Liste des niveaux bloque:");
         println();
-        for(int idx = 1; idx < columnCount(listeJoueur); idx++) {
+        for(int idx = 1; idx < columnCount(listeJoueur) ; idx++) {
             if(equals(getCell(listeJoueur, idxJoueur, idx),"false")){
                 println(getCell(listeNiveau, idx-1, 0));
             }
         }
     }
 
-    /*void infiniteMode(){
-        int choixMod = 0;
-        CSVFile listeNiveau = loadCSV(CHEMIN_LISTE_NIVEAU, ',');
-        int nbColonneNiveau = columnCount(listeNiveau);
-        for(int cpt = 1 ; cpt <= nbColonneNiveau ; cpt++){
-            if(choisirNiveau(choixMod) == 0 && cpt == nbColonneNiveau -1){
-                int aleaQuestion =(int) random()*cpt;
-                lancerNiveau(aleaQuestion);
+    void modeDuel(int idxJoueur){
+        boolean quitter = false;
+        int score = 0;
+        String[] listePoke = new String[]{"Pikachu", "Dracaufeu", "Evoli", "Rafflesia", "Sablaireau", "Parasect", "Mewtwo", "Carapuce"};
+        while(!quitter) {
+            if (combat(loadPokemon(listePoke[(int)(random() * 8)]), loadPokemon(listePoke[(int)(random() * 8)]))) {
+                score++;
+            }
+            if(!equals(readString(), "oui")) {
+                quitter = true;
             }
         }
-    }*/
+        sauvegardeScoreDuel(score, idxJoueur);
+
+    }
     
 
 
@@ -570,7 +620,7 @@ class Pokemath extends Program{
             String phraseNiveauChoix = "Saisissez le niveau que vous voulez lancer : ";
             for(int idx = 0 ; idx< length(phraseNiveauChoix) ; idx++){
                 print(charAt(phraseNiveauChoix,idx));
-                //delay(50);
+                delay(50);
             }
     
             choixNiveau = readString();
@@ -579,7 +629,7 @@ class Pokemath extends Program{
             if(toInt(choixNiveau)>rowCount(listeNiveau) || toInt(choixNiveau) < 0){
                 println("Le niveau " + choixNiveau + " n'existe pas.");
 
-            }else if(equals(getCell(listeJoueur, idxJoueur, toInt(choixNiveau)),"true")){
+            }else if(equals(getCell(listeJoueur, idxJoueur, toInt(choixNiveau) + 1),"true") || intIsValide(getCell(listeJoueur, idxJoueur, toInt(choixNiveau) + 1)) ){
                 println("Vous avez choisi le niveau " + choixNiveau);
                 choisiNiveauDispo = true;
 
@@ -605,6 +655,8 @@ class Pokemath extends Program{
             if(col==0){
                 csv[nbLigneJoueur][col]= nomJoueur;
             }else if(col==1){
+                csv[nbLigneJoueur][col]= "" + 0;
+            }else if(col==2){
                 csv[nbLigneJoueur][col]= "true";
             }else{
                 csv[nbLigneJoueur][col]= "false";
@@ -623,9 +675,13 @@ class Pokemath extends Program{
         int nbLigneJoueur = rowCount(listeJoueur);
         int nbColonneJoueur = columnCount(listeJoueur);
         int idxJoueur = 0;
+        String welcome = "Bienvenue " + nomJoueur + " ! :)";
         for(int idx=0; idx<nbLigneJoueur; idx++){
             if(equals(getCell(listeJoueur, idx, 0),nomJoueur)){
-                println("Bienvenue " + nomJoueur + " ! :)");
+                for(int cpt = 0 ; cpt < length(welcome); cpt++){
+                    println(charAt(welcome,cpt));
+                    delay(50);
+                }
                 idxJoueur = idx;
                 joueurInscrit = true;
             }
