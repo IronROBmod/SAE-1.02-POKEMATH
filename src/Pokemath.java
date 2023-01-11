@@ -163,6 +163,7 @@ class Pokemath extends Program{
     
     // Renvoie le numéro de ligne d'une chaine dans la première colonne
     int getNumLigne(CSVFile fichier, String chaine) {
+        print(chaine);
         for(int numLigne = 1; numLigne < rowCount(fichier); numLigne++) {
             if (equals(getCell(fichier, numLigne, 0), chaine)) {
                 return numLigne;
@@ -324,7 +325,7 @@ class Pokemath extends Program{
 
     int questionDegatAvecStab(Pokemon joueur, Pokemon adverse) {
         if(stab(joueur,joueur.attaque)) {
-            println("Le pokemon " + joueur.nom + " possede le type " + joueur.element1 + " et l'attaque " + joueur.attaque.nom + " est de type " + joueur.attaque.element +" qui poséde "+ joueur.attaque.power + " de dégats, donc il y a STAB (donc il a un bonus de 50% sur son attaque)");
+            println("Le pokemon " + joueur.nom + " possede le type " + joueur.element1 + " / " + joueur.element2 +" et l'attaque " + joueur.attaque.nom + " est de type " + joueur.attaque.element +" qui poséde "+ joueur.attaque.power + " de dégats, donc il y a STAB (donc il a un bonus de 50% sur son attaque)");
             println("Combien de degats fait l'attaque " + joueur.attaque.nom + " avec STAB ?");
             return joueur.attaque.power + joueur.attaque.power/2;
         }else{

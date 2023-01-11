@@ -1,6 +1,6 @@
 ﻿NAME,PV,ATTAQUE,ATTACK_SPECIAL,DEFENSE,DEFENSE_SPECIAL,VITESSE,ELEMENT1,ELEMENT2,MOVE1,MOVE2,MOVE3,MOVE4
 Pikachu,211,146,116,136,136,216,ELECTRIK,,Mimi-Queue,Vive-Attaque,Cage-Éclair,Tonnerre
-Dracaufeu,297,204,192,254,206,236,FEU,,Griffe,Dracogriffe,Griffe Ombre,Rugissement
+Dracaufeu,297,204,192,254,206,236,FEU,VOL,Griffe,Dracogriffe,Griffe Ombre,Rugissement
 Évoli,55,55,50,45,65,55,NORMAL,,Charge,Jet de Sable,Vive-Attaque,Morsure
 Rafflesia,75,80,85,110,90,50,PLANTE,POISON,Poudre Toxik,Tempête Florale,Dance-Fleur,Lance-Soleil
 Sablaireau,75,100,110,45,55,65,SOL,,Griffe,Jet de Sable,Roulade,Combo-Griffe
