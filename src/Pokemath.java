@@ -65,7 +65,7 @@ class Pokemath extends Program{
     ////////////////////////////////////////////////////////////////////////////////
     
     // Fonction qui convertit une chaine contenant un nombre en un entier ( permet de lire les stats dans les csv)
-    int toInt(String str) {
+    int stringToInt(String str) {
         int idx = length(str) - 1;
         int multi = 1;
         int sum = 0;
@@ -75,6 +75,34 @@ class Pokemath extends Program{
             idx = idx - 1;
         }
         return sum;
+    }
+    boolean intIsValide(String chaine){
+        for(int cpt = 0 ; length(chaine) > cpt ; cpt++){
+            if(charAt(chaine,cpt) >= '0' && charAt(chaine,cpt) <= '9'){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    String intToString(int nombre) {
+        return nombre + "";
+    }
+
+    void testIntToString(){
+        assertEquals("0", intToString(0));
+        assertEquals("1", intToString(1));
+        assertEquals("2", intToString(2));
+        assertEquals("3", intToString(3));
+        assertEquals("4", intToString(4)); 
+        assertEquals("5", intToString(5));
+        assertEquals("6", intToString(6));
+        assertEquals("7", intToString(7));
+        assertEquals("8", intToString(8));
+        assertEquals("9", intToString(9));
+        assertEquals("35", intToString(35));
+        assertEquals("100", intToString(100));
+
     }
 
 
@@ -115,9 +143,8 @@ class Pokemath extends Program{
             return Element.VOL;
         }else if(equals(chaine,"NORMAL")){
             return Element.NORMAL;
-        }else{
-            return Element.AUCUN;
         }
+        return Element.AUCUN;
     }
 
     void testToElement(){
@@ -201,7 +228,7 @@ class Pokemath extends Program{
     Move loadAttaque(String nom) {
         CSVFile listeAttaques = loadCSV(CHEMIN_LISTE_ATTAQUES, ';');
         String[] stats = getLigne(listeAttaques, getNumLigne(listeAttaques, nom));
-        return newMove(stats[0], toElement(stats[6]), toInt(stats[2]));
+        return newMove(stats[0], toElement(stats[6]), stringToInt(stats[2]));
 
     }
 
@@ -220,7 +247,7 @@ class Pokemath extends Program{
     Pokemon loadPokemon(String nom) {
         CSVFile listePokemon = loadCSV(CHEMIN_LISTE_POKEMONS);
         String[] stats = getLigne(listePokemon, getNumLigne(listePokemon, nom));
-        return newPokemon(stats[0], 100, toInt(stats[1]), toInt(stats[6]), toElement(stats[7]), toElement(stats[8]), loadAttaque(stats[9]));
+        return newPokemon(stats[0], 100, toIstringToIntnt(stats[1]), stringToInt(stats[6]), toElement(stats[7]), toElement(stats[8]), loadAttaque(stats[9]));
     }
 
     void testLoadPokemon() {
