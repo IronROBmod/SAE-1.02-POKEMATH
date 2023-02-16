@@ -36,4 +36,4 @@ Permet le lancement du jeu
 
 Un mode duel a été crée mais nous n'avons pas réussi à le faire se lancer depuis le menu principal
 Pour le faire se lancer automatiquement après la saisie du nom :
- -> décommentez "//modeDuel(idxJoueur);" dans l'algrithme principale (Pokemath.java - ligne 717)
+ -> décommentez "//modeDuel(idxJoueur);" dans l'algorithme principale (Pokemath.java - ligne 717)
