@@ -1,7 +1,7 @@
 <POKEMATH>
 ===========
 
-Développé par <Hocine CHEBOUT> & <Théo CATTANEO> : Groupe A  
+Développé par Hocine CHEBOUT & Théo CATTANEO : Groupe A  
 Contacts : <hocine.chebout.etu@univ-lille.fr> , <theo.cattaneo.etu@univ-lille.fr>
 
 # Présentation de POKEMATH
